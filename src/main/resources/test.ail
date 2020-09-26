@@ -1,0 +1,13 @@
+ailv("b100")
+
+epool(delegate OnBlockBreak, "(Lorg/bukkit/event/block/BlockBreakEvent;)V")
+
+decl OnEnable {
+    push(10)
+    store$1(int)
+}
+
+decl OnBlockBreak {
+    push(text "hi")
+    store$2(text)
+}

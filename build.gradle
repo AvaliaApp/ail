@@ -1,0 +1,55 @@
+plugins {
+    id 'java'
+    id 'antlr'
+}
+
+group 'app.avalia'
+version 'b100'
+
+configurations {
+    compile {
+        extendsFrom = extendsFrom.findAll { it != configurations.antlr }
+    }
+}
+
+sourceSets {
+    main {
+        java.srcDirs += "build/generated-src/antlr/main/"
+    }
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "app.avalia.compiler.AILMain"
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+generateGrammarSource {
+    maxHeapSize = "64m"
+    arguments += ["-visitor", "-long-messages"]
+}
+
+clean.doLast {
+    file('src/main/java/app/avalia/generated').deleteDir()
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    antlr group: 'org.antlr', name: 'antlr4', version: '4.8-1'
+
+    compile group: 'org.antlr', name: 'antlr4-runtime', version: '4.8-1'
+    compile group: 'org.antlr', name: 'antlr4', version: '4.8-1'
+
+    compile group: 'org.ow2.asm', name: 'asm', version: '8.0.1'
+    compile group: 'net.lingala.zip4j', name: 'zip4j', version: '2.6.1'
+
+    compile group: 'commons-io', name: 'commons-io', version: '2.7'
+    compile group: 'com.jsoniter', name: 'jsoniter', version: '0.9.19'
+}

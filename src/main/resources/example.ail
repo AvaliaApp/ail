@@ -1,0 +1,48 @@
+// all AIL classes must start with _ailv instruction
+// to properly identify and compare the compiler/class version
+ailv("b100")
+
+// setup the plugin info
+cfgn("TestPlugin")
+cfgv("1.0")
+
+// add invoke pool info
+ipool$1("virtual", "getPlayer", "org/bukkit/event/block/BlockBreakEvent", "()Lorg/bukkit/entity/Player;")
+ipool$2("interface", "sendMessage", "org/bukkit/entity/Player", "(Ljava/lang/String;)V")
+
+// add event pool info
+epool(delegate OnBlockBreak, "(Lorg/bukkit/event/block/BlockBreakEvent;)V")
+
+// add command pool info
+cpool(delegate TestCommand, "test")
+
+clis
+
+decl OnEnable {
+    init               // register everything
+}
+
+decl OnBlockBreak {
+    load$1(ref)        // load event var
+    invoke$1           // invoke getPlayer()
+    store$2(ref)       // save the result of getPlayer()
+
+    push(0)            // load 0
+    store$3(int)       // save i=0
+    label$0            // mark the start of the loop
+    load$3(int)        // load i
+    push(10)           // load 10
+
+    if('<') {          // if condition not met, jump to the end
+        load$2(ref)
+        push(text "block break event!")
+        invoke$2
+
+        inc$3(1)       // increase i by 1 (i++)
+        jmp$0          // jump to the loop beginning
+    }
+}
+
+decl TestCommand {
+    nvar$4(1)
+}
