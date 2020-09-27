@@ -3,7 +3,7 @@ package app.avalia.compiler.pool;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Pool<K, V> {
+public class BasePool<K, V> {
 
     private final Map<K, V> pool = new HashMap<>();
 

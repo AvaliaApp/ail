@@ -1,7 +1,4 @@
-package app.avalia.compiler.error;
-
-import java.util.HashMap;
-import java.util.Map;
+package app.avalia.compiler.lang.error;
 
 public class AILErrorLogger {
 

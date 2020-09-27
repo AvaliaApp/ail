@@ -1,16 +1,13 @@
 package app.avalia.compiler.provider.instruction;
 
-import app.avalia.compiler.asm.BytecodeVisitor;
-import app.avalia.compiler.asm.MinecraftDescriptors;
+import app.avalia.compiler.bytecode.BytecodeVisitor;
 import app.avalia.compiler.lang.AILInstruction;
 import app.avalia.compiler.lang.type.AILType;
-import app.avalia.compiler.pool.PoolProvider;
-import app.avalia.compiler.pool.data.CommandPoolInfo;
+import app.avalia.compiler.pool.BasePoolProvider;
+import app.avalia.compiler.pool.info.CommandPoolInfo;
 import app.avalia.compiler.provider.AILProvider;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
-
-import java.util.Map;
 
 public class InsnCommandListenProvider implements AILProvider<AILInstruction> {
     @Override
@@ -24,7 +21,7 @@ public class InsnCommandListenProvider implements AILProvider<AILInstruction> {
                         "Lorg/bukkit/command/Command;Ljava/lang/String;" +
                         "[Ljava/lang/String;)Z");
         visitor.current().visitCode();
-        for (CommandPoolInfo info : PoolProvider.getCommandPool().getPool().values()) {
+        for (CommandPoolInfo info : BasePoolProvider.getCommandPool().getPool().values()) {
             String target = decapitalize(info.getTarget());
             String name = info.getName();
 

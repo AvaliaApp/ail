@@ -1,7 +1,7 @@
-package app.avalia.compiler.jar;
+package app.avalia.compiler.bytecode.jar;
 
-import app.avalia.compiler.pool.PoolProvider;
-import app.avalia.compiler.pool.data.CommandPoolInfo;
+import app.avalia.compiler.pool.BasePoolProvider;
+import app.avalia.compiler.pool.info.CommandPoolInfo;
 import net.lingala.zip4j.ZipFile;
 import org.apache.commons.io.FileUtils;
 
@@ -37,11 +37,12 @@ public class JarPackager {
 
     private static void writePluginConfig(File file) throws IOException {
         List<String> list = new ArrayList<>(Arrays.asList(
-                "name: " + PoolProvider.getPluginName(),
-                "version: " + PoolProvider.getPluginVersion(),
+                "name: " + BasePoolProvider.getPluginName(),
+                "version: " + BasePoolProvider.getPluginVersion(),
+                "author: AILCompiler",
                 "main: AvaliaAssembly",
                 "commands:"));
-        for (CommandPoolInfo info : PoolProvider.getCommandPool().getPool().values()) {
+        for (CommandPoolInfo info : BasePoolProvider.getCommandPool().getPool().values()) {
             list.add("  " + info.getName() + ":");
             list.add("    description: Auto-Generated AIL command");
         }
@@ -51,7 +52,7 @@ public class JarPackager {
     private static void writeMetaInfo(File file) throws IOException {
         FileUtils.writeLines(file, Arrays.asList(
                 "Manifest-Version: 1.0",
-                "Created-By: Avalia"), "\n");
+                "Created-By: AIL Compiler"), "\n");
     }
 
 }

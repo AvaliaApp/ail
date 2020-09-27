@@ -1,12 +1,11 @@
-package app.avalia.compiler.provider.instruction.setup;
+package app.avalia.compiler.provider.instruction.config;
 
-import app.avalia.compiler.asm.BytecodeVisitor;
+import app.avalia.compiler.bytecode.BytecodeVisitor;
 import app.avalia.compiler.lang.AILArgument;
 import app.avalia.compiler.lang.AILInstruction;
 import app.avalia.compiler.lang.content.AILValueContent;
-import app.avalia.compiler.lang.type.AILType;
-import app.avalia.compiler.pool.PoolProvider;
-import app.avalia.compiler.pool.data.InvokePoolInfo;
+import app.avalia.compiler.pool.BasePoolProvider;
+import app.avalia.compiler.pool.info.InvokePoolInfo;
 import app.avalia.compiler.provider.AILProvider;
 
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class InsnInvokePoolProvider implements AILProvider<AILInstruction> {
         invokePool.setInstanceSig(arguments.get(2));
         invokePool.setMethodSig(arguments.get(3));
 
-        PoolProvider.getInvokePool().push(id, invokePool);
+        BasePoolProvider.getInvokePool().push(id, invokePool);
     }
 
     @Override

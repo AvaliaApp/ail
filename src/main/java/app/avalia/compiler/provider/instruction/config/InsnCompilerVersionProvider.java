@@ -1,8 +1,8 @@
-package app.avalia.compiler.provider.instruction.setup;
+package app.avalia.compiler.provider.instruction.config;
 
 import app.avalia.compiler.AILCompiler;
-import app.avalia.compiler.error.AILErrorLogger;
-import app.avalia.compiler.asm.BytecodeVisitor;
+import app.avalia.compiler.lang.error.AILErrorLogger;
+import app.avalia.compiler.bytecode.BytecodeVisitor;
 import app.avalia.compiler.lang.AILArgument;
 import app.avalia.compiler.lang.AILContent;
 import app.avalia.compiler.lang.AILInstruction;

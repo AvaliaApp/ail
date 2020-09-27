@@ -1,6 +1,6 @@
 package app.avalia.compiler.provider.function;
 
-import app.avalia.compiler.asm.BytecodeVisitor;
+import app.avalia.compiler.bytecode.BytecodeVisitor;
 import app.avalia.compiler.lang.AILFunction;
 import app.avalia.compiler.provider.AILProvider;
 import org.objectweb.asm.Opcodes;

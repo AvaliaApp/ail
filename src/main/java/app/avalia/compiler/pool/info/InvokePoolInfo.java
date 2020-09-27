@@ -1,4 +1,4 @@
-package app.avalia.compiler.pool.data;
+package app.avalia.compiler.pool.info;
 
 import org.objectweb.asm.Opcodes;
 

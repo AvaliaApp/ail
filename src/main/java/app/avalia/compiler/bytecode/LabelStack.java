@@ -1,4 +1,4 @@
-package app.avalia.compiler.asm;
+package app.avalia.compiler.bytecode;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;

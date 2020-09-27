@@ -1,11 +1,11 @@
-package app.avalia.compiler.provider.instruction.setup;
+package app.avalia.compiler.provider.instruction.config;
 
-import app.avalia.compiler.asm.BytecodeVisitor;
+import app.avalia.compiler.bytecode.BytecodeVisitor;
 import app.avalia.compiler.lang.AILArgument;
 import app.avalia.compiler.lang.AILInstruction;
 import app.avalia.compiler.lang.content.AILValueContent;
 import app.avalia.compiler.lang.type.AILType;
-import app.avalia.compiler.pool.PoolProvider;
+import app.avalia.compiler.pool.BasePoolProvider;
 import app.avalia.compiler.provider.AILProvider;
 
 public class InsnConfigVersionProvider implements AILProvider<AILInstruction> {
@@ -21,7 +21,7 @@ public class InsnConfigVersionProvider implements AILProvider<AILInstruction> {
         AILType type = content.getType();
         String val = content.getContent().toString();
 
-        PoolProvider.setPluginVersion(val);
+        BasePoolProvider.setPluginVersion(val);
     }
 
     @Override

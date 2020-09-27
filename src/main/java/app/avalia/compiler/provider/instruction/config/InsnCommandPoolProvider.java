@@ -1,18 +1,15 @@
-package app.avalia.compiler.provider.instruction.setup;
+package app.avalia.compiler.provider.instruction.config;
 
-import app.avalia.compiler.asm.BytecodeVisitor;
+import app.avalia.compiler.bytecode.BytecodeVisitor;
 import app.avalia.compiler.lang.AILArgument;
 import app.avalia.compiler.lang.AILInstruction;
 import app.avalia.compiler.lang.content.AILDelegateContent;
 import app.avalia.compiler.lang.content.AILValueContent;
-import app.avalia.compiler.pool.PoolProvider;
-import app.avalia.compiler.pool.data.CommandPoolInfo;
-import app.avalia.compiler.pool.set.AILFunctionSet;
+import app.avalia.compiler.pool.BasePoolProvider;
+import app.avalia.compiler.pool.info.CommandPoolInfo;
+import app.avalia.compiler.pool.BaseFunctions;
 import app.avalia.compiler.provider.AILProvider;
 import app.avalia.compiler.provider.function.FuncBukkitCommandProvider;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class InsnCommandPoolProvider implements AILProvider<AILInstruction> {
     @Override
@@ -35,9 +32,9 @@ public class InsnCommandPoolProvider implements AILProvider<AILInstruction> {
         info.setTarget(target);
         info.setName(name);
 
-        AILFunctionSet.push(target, new FuncBukkitCommandProvider());
+        BaseFunctions.push(target, new FuncBukkitCommandProvider());
 
-        PoolProvider.getCommandPool().push(info.getTarget(), info);
+        BasePoolProvider.getCommandPool().push(info.getTarget(), info);
     }
 
     @Override

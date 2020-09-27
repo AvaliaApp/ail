@@ -1,4 +1,4 @@
-package app.avalia.compiler.error;
+package app.avalia.compiler.lang.error;
 
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;

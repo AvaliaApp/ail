@@ -1,14 +1,14 @@
-package app.avalia.compiler.pool.set;
+package app.avalia.compiler.pool;
 
 import app.avalia.compiler.lang.AILInstruction;
 import app.avalia.compiler.provider.AILProvider;
 import app.avalia.compiler.provider.instruction.*;
-import app.avalia.compiler.provider.instruction.setup.*;
+import app.avalia.compiler.provider.instruction.config.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class AILInstructionSet {
+public class BaseInstructions {
 
     private static final Map<String, AILProvider<AILInstruction>> instructions = new HashMap<>();
 
@@ -35,6 +35,7 @@ public class AILInstructionSet {
         instructions.put("ret", new InsnReturnProvider());
         instructions.put("clis", new InsnCommandListenProvider());
         instructions.put("new", new InsnNewProvider());
+        instructions.put("cast", new InsnCastProvider());
     }
 
     public static AILProvider<AILInstruction> getProvider(String insnName) {

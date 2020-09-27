@@ -1,7 +1,7 @@
 package app.avalia.compiler.provider.instruction;
 
-import app.avalia.compiler.asm.BytecodeVisitor;
-import app.avalia.compiler.asm.LabelStack;
+import app.avalia.compiler.bytecode.BytecodeVisitor;
+import app.avalia.compiler.bytecode.LabelStack;
 import app.avalia.compiler.lang.AILInstruction;
 import app.avalia.compiler.provider.AILProvider;
 

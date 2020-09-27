@@ -1,6 +1,6 @@
 package app.avalia.compiler.provider;
 
-import app.avalia.compiler.asm.BytecodeVisitor;
+import app.avalia.compiler.bytecode.BytecodeVisitor;
 import app.avalia.compiler.lang.AILComponent;
 
 public interface AILProvider<T extends AILComponent> {

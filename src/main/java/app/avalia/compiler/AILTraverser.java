@@ -3,12 +3,12 @@ package app.avalia.compiler;
 import app.avalia.antlr.AILBaseVisitor;
 import app.avalia.antlr.AILLexer;
 import app.avalia.antlr.AILParser;
-import app.avalia.compiler.error.AILErrorLogger;
+import app.avalia.compiler.lang.error.AILErrorLogger;
 import app.avalia.compiler.lang.*;
 import app.avalia.compiler.lang.content.AILDelegateContent;
 import app.avalia.compiler.lang.content.AILTypeContent;
 import app.avalia.compiler.lang.content.AILValueContent;
-import app.avalia.compiler.pool.set.AILInstructionSet;
+import app.avalia.compiler.pool.BaseInstructions;
 import app.avalia.compiler.lang.type.AILContentType;
 import app.avalia.compiler.lang.type.AILType;
 import org.antlr.v4.runtime.ANTLRErrorListener;
@@ -31,17 +31,18 @@ public class AILTraverser {
         return new ClassVisitor().visitBase(parser.parse().base());
     }
 
-    public static AILClass traverse(String classFile, ANTLRErrorListener listener) throws IOException {
+    public static void traverse(String classFile, ANTLRErrorListener listener) throws IOException {
         InputStream stream = new FileInputStream(new File(classFile));
 
         AILLexer lexer = new AILLexer(CharStreams.fromStream(stream));
         lexer.removeErrorListeners();
         lexer.addErrorListener(listener);
+
         AILParser parser = new AILParser(new CommonTokenStream(lexer));
         parser.removeErrorListeners();
         parser.addErrorListener(listener);
 
-        return new ClassVisitor().visitBase(parser.parse().base());
+        new ClassVisitor().visitBase(parser.parse().base());
     }
 
     public static AILClass traverse(String classFile) throws IOException {
@@ -116,7 +117,7 @@ public class AILTraverser {
                     instruction.getArguments().add(argContext.accept(visitor));
             }
 
-            AILInstructionSet.getProvider(instruction.getName())
+            BaseInstructions.getProvider(instruction.getName())
                     .parse(instruction);
 
             return instruction;
@@ -192,6 +193,9 @@ public class AILTraverser {
                         break;
                     case "NUMBER_LITERAL":
                         content.setType(AILType.INT);
+                        break;
+                    case "BOOL_LITERAL":
+                        content.setType(AILType.BOOL);
                         break;
                 }
 

@@ -1,8 +1,8 @@
-package app.avalia.compiler.asm;
+package app.avalia.compiler.bytecode;
 
 import app.avalia.compiler.lang.type.AILType;
-import app.avalia.compiler.pool.PoolProvider;
-import app.avalia.compiler.pool.data.CommandPoolInfo;
+import app.avalia.compiler.pool.BasePoolProvider;
+import app.avalia.compiler.pool.info.CommandPoolInfo;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -109,7 +109,7 @@ public class BytecodeVisitor {
                 MinecraftDescriptors.PLUGIN_MANAGER$REGISTER_LISTENERS,
                 true);
 
-        for (CommandPoolInfo info : PoolProvider.getCommandPool().getPool().values()) {
+        for (CommandPoolInfo info : BasePoolProvider.getCommandPool().getPool().values()) {
             current().visitVarInsn(Opcodes.ALOAD, 0);
             current().visitLdcInsn(info.getName());
             current().visitMethodInsn(Opcodes.INVOKEVIRTUAL,

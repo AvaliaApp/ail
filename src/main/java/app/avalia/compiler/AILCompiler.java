@@ -1,22 +1,20 @@
 package app.avalia.compiler;
 
-import app.avalia.compiler.asm.BytecodeVisitor;
-import app.avalia.compiler.asm.LabelStack;
-import app.avalia.compiler.jar.JarPackager;
+import app.avalia.compiler.bytecode.BytecodeVisitor;
+import app.avalia.compiler.bytecode.LabelStack;
 import app.avalia.compiler.lang.*;
-import app.avalia.compiler.pool.set.AILFunctionSet;
-import app.avalia.compiler.pool.set.AILInstructionSet;
+import app.avalia.compiler.pool.BaseFunctions;
+import app.avalia.compiler.pool.BaseInstructions;
 import app.avalia.compiler.provider.AILProvider;
 import app.avalia.compiler.provider.ClassProvider;
 
-import java.io.IOException;
 import java.util.Collection;
 
 public class AILCompiler {
 
     public static final String COMPILER_VERSION = "b100";
 
-    public static void compile(AILClass traversedClass) {
+    public static byte[] compile(AILClass traversedClass) {
         BytecodeVisitor visitor = new BytecodeVisitor();
 
         ClassProvider classProvider = new ClassProvider();
@@ -25,7 +23,7 @@ public class AILCompiler {
             recursiveInstructionCompile(visitor, traversedClass.getInstructions());
 
             for (AILFunction function : traversedClass.getFunctions()) {
-                AILProvider<AILFunction> provider = AILFunctionSet.getProvider(function.getName());
+                AILProvider<AILFunction> provider = BaseFunctions.getProvider(function.getName());
                 provider.begin(visitor, function);
                 {
                     recursiveInstructionCompile(visitor, function.getInstructions());
@@ -37,12 +35,7 @@ public class AILCompiler {
         }
         classProvider.end(visitor, traversedClass);
 
-        byte[] bytecode = visitor.get().toByteArray();
-        try {
-            JarPackager.pack(bytecode);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return visitor.get().toByteArray();
     }
 
     private static void recursiveInstructionCompile(BytecodeVisitor visitor, Collection<AILInstruction> instructions) {
@@ -50,7 +43,7 @@ public class AILCompiler {
             return;
 
         for (AILInstruction instruction : instructions) {
-            AILProvider<AILInstruction> insnProvider = AILInstructionSet.getProvider(instruction.getName());
+            AILProvider<AILInstruction> insnProvider = BaseInstructions.getProvider(instruction.getName());
             insnProvider.begin(visitor, instruction);
             {
                 recursiveInstructionCompile(visitor, instruction.getInstructions());

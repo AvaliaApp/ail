@@ -1,4 +1,4 @@
-package app.avalia.compiler.asm;
+package app.avalia.compiler.bytecode;
 
 public class MinecraftDescriptors {
 

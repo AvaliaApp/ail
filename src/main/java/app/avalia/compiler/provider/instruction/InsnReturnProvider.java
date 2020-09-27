@@ -1,10 +1,9 @@
 package app.avalia.compiler.provider.instruction;
 
-import app.avalia.compiler.asm.BytecodeVisitor;
+import app.avalia.compiler.bytecode.BytecodeVisitor;
 import app.avalia.compiler.lang.AILArgument;
 import app.avalia.compiler.lang.AILInstruction;
 import app.avalia.compiler.lang.content.AILTypeContent;
-import app.avalia.compiler.lang.content.AILValueContent;
 import app.avalia.compiler.lang.type.AILType;
 import app.avalia.compiler.provider.AILProvider;
 import org.objectweb.asm.Opcodes;

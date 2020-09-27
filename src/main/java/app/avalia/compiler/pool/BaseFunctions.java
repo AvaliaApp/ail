@@ -1,4 +1,4 @@
-package app.avalia.compiler.pool.set;
+package app.avalia.compiler.pool;
 
 import app.avalia.compiler.lang.AILFunction;
 import app.avalia.compiler.provider.AILProvider;
@@ -7,7 +7,7 @@ import app.avalia.compiler.provider.function.FuncEnableEventProvider;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AILFunctionSet {
+public class BaseFunctions {
 
     private static final Map<String, AILProvider<AILFunction>> functions = new HashMap<>();
 
