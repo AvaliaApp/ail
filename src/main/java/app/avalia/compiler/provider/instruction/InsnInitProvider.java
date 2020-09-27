@@ -17,6 +17,5 @@ public class InsnInitProvider implements AILProvider<AILInstruction> {
 
     @Override
     public void end(BytecodeVisitor visitor, AILInstruction component) {
-
     }
 }

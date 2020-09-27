@@ -19,7 +19,7 @@ public class ClassProvider implements AILProvider<AILClass> {
                 "AvaliaAssembly",
                 null,
                 "org/bukkit/plugin/java/JavaPlugin",
-                new String[]{"org/bukkit/event/Listener"});
+                new String[]{"org/bukkit/event/Listener", "org/bukkit/command/CommandExecutor"});
 
         visitor.get().visitSource("AvaliaAssembly.java", null);
 

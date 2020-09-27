@@ -3,6 +3,7 @@ package app.avalia.compiler.provider.function;
 import app.avalia.compiler.asm.BytecodeVisitor;
 import app.avalia.compiler.lang.AILFunction;
 import app.avalia.compiler.provider.AILProvider;
+import org.objectweb.asm.Opcodes;
 
 public class FuncBukkitEventProvider implements AILProvider<AILFunction> {
 
@@ -24,6 +25,7 @@ public class FuncBukkitEventProvider implements AILProvider<AILFunction> {
 
     @Override
     public void end(BytecodeVisitor visitor, AILFunction component) {
+        visitor.current().visitInsn(Opcodes.RETURN);
         visitor.current().visitMaxs(0, 0);
         visitor.current().visitEnd();
     }

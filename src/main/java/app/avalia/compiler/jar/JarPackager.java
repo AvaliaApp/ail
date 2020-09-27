@@ -1,12 +1,15 @@
 package app.avalia.compiler.jar;
 
 import app.avalia.compiler.pool.PoolProvider;
+import app.avalia.compiler.pool.data.CommandPoolInfo;
 import net.lingala.zip4j.ZipFile;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class JarPackager {
 
@@ -33,10 +36,16 @@ public class JarPackager {
     }
 
     private static void writePluginConfig(File file) throws IOException {
-        FileUtils.writeLines(file, Arrays.asList(
+        List<String> list = new ArrayList<>(Arrays.asList(
                 "name: " + PoolProvider.getPluginName(),
                 "version: " + PoolProvider.getPluginVersion(),
-                "main: AvaliaAssembly"), "\n");
+                "main: AvaliaAssembly",
+                "commands:"));
+        for (CommandPoolInfo info : PoolProvider.getCommandPool().getPool().values()) {
+            list.add("  " + info.getName() + ":");
+            list.add("    description: Auto-Generated AIL command");
+        }
+        FileUtils.writeLines(file, list, "\n");
     }
 
     private static void writeMetaInfo(File file) throws IOException {

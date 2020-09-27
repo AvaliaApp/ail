@@ -1,6 +1,8 @@
 package app.avalia.compiler.asm;
 
 import app.avalia.compiler.lang.type.AILType;
+import app.avalia.compiler.pool.PoolProvider;
+import app.avalia.compiler.pool.data.CommandPoolInfo;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -106,6 +108,23 @@ public class BytecodeVisitor {
                 "registerEvents",
                 MinecraftDescriptors.PLUGIN_MANAGER$REGISTER_LISTENERS,
                 true);
+
+        for (CommandPoolInfo info : PoolProvider.getCommandPool().getPool().values()) {
+            current().visitVarInsn(Opcodes.ALOAD, 0);
+            current().visitLdcInsn(info.getName());
+            current().visitMethodInsn(Opcodes.INVOKEVIRTUAL,
+                    "AvaliaAssembly",
+                    "getCommand",
+                    "(Ljava/lang/String;)Lorg/bukkit/command/PluginCommand;",
+                    false);
+            current().visitVarInsn(Opcodes.ALOAD, 0);
+            current().visitMethodInsn(Opcodes.INVOKEVIRTUAL,
+                    "org/bukkit/command/PluginCommand",
+                    "setExecutor",
+                    "(Lorg/bukkit/command/CommandExecutor;)V",
+                    false);
+        }
+
     }
 
 }
