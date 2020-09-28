@@ -117,6 +117,7 @@ public class InsnCastProvider implements AILProvider<AILInstruction> {
         SHORT_TO_TEXT(AILType.SHORT, AILType.TEXT, ParseInvoker.SHORT_VALUEOF),
         CHAR_TO_TEXT(AILType.CHAR, AILType.TEXT, ParseInvoker.CHAR_VALUEOF),
         LONG_TO_TEXT(AILType.LONG, AILType.TEXT, ParseInvoker.LONG_VALUEOF),
+        BOOL_TO_TEXT(AILType.BOOL, AILType.TEXT, ParseInvoker.BOOL_VALUEOF),
 
         TEXT_TO_INT(AILType.TEXT, AILType.INT, ParseInvoker.INT_PARSE),
         TEXT_TO_DOUBLE(AILType.TEXT, AILType.DOUBLE, ParseInvoker.DOUBLE_PARSE),
@@ -124,7 +125,8 @@ public class InsnCastProvider implements AILProvider<AILInstruction> {
         TEXT_TO_FLOAT(AILType.TEXT, AILType.FLOAT, ParseInvoker.FLOAT_PARSE),
         TEXT_TO_SHORT(AILType.TEXT, AILType.SHORT, ParseInvoker.SHORT_PARSE),
         TEXT_TO_CHAR(AILType.TEXT, AILType.CHAR, ParseInvoker.CHAR_AT),
-        TEXT_TO_LONG(AILType.TEXT, AILType.LONG, ParseInvoker.LONG_PARSE);
+        TEXT_TO_LONG(AILType.TEXT, AILType.LONG, ParseInvoker.LONG_PARSE),
+        TEXT_TO_BOOL(AILType.TEXT, AILType.BOOL, ParseInvoker.BOOL_PARSE);
 
         public static ParseInvoker get(AILType origin, AILType target) {
             for (ParseProcess process : ParseProcess.values()) {
