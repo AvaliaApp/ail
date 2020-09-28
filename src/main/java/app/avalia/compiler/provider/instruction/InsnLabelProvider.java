@@ -1,7 +1,7 @@
 package app.avalia.compiler.provider.instruction;
 
 import app.avalia.compiler.bytecode.BytecodeVisitor;
-import app.avalia.compiler.bytecode.LabelStack;
+import app.avalia.compiler.bytecode.observer.LabelObserver;
 import app.avalia.compiler.lang.AILInstruction;
 import app.avalia.compiler.provider.AILProvider;
 
@@ -12,7 +12,7 @@ public class InsnLabelProvider implements AILProvider<AILInstruction> {
 
     @Override
     public void begin(BytecodeVisitor visitor, AILInstruction component) {
-        visitor.current().visitLabel(LabelStack.visit(visitor.current(), component.getId()));
+        visitor.current().visitLabel(LabelObserver.visit(visitor.current(), component.getId()));
     }
 
     @Override

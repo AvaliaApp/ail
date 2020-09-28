@@ -1,11 +1,14 @@
 package app.avalia.compiler.provider.instruction;
 
 import app.avalia.compiler.bytecode.BytecodeVisitor;
+import app.avalia.compiler.bytecode.observer.StackObserver;
 import app.avalia.compiler.lang.AILArgument;
 import app.avalia.compiler.lang.AILInstruction;
 import app.avalia.compiler.lang.content.AILTypeContent;
 import app.avalia.compiler.lang.type.AILType;
 import app.avalia.compiler.provider.AILProvider;
+
+import java.util.Optional;
 
 public class InsnLoadProvider implements AILProvider<AILInstruction> {
     @Override
@@ -15,11 +18,18 @@ public class InsnLoadProvider implements AILProvider<AILInstruction> {
 
     @Override
     public void begin(BytecodeVisitor visitor, AILInstruction component) {
-        AILArgument argument = component.getArguments().get(0);
-        AILTypeContent content = (AILTypeContent) argument.getContent();
-        AILType type = content.getType();
+        Optional<AILTypeContent> content = component.asType(0);
+        AILType type;
+        if (content.isPresent())
+            type = content.get().getType();
+        else type = StackObserver.byId(component.getId());
+
+        if (type != null) {
+            System.out.println("LOADED " + type.name() + " AT " + component.getId());
+        } else System.out.println("LOADED NULL AT " + component.getId());
 
         visitor.current().visitVarInsn(type.toLoadInsn(), component.getId());
+        StackObserver.push(type);
     }
 
     @Override

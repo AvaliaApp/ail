@@ -23,8 +23,7 @@ public class InsnInvokePoolProvider implements AILProvider<AILInstruction> {
         InvokePoolInfo invokePool = new InvokePoolInfo(id);
         List<String> arguments = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            AILArgument argument = component.getArguments().get(i);
-            AILValueContent content = (AILValueContent) argument.getContent();
+            AILValueContent content = component.asValue(i).get();
 
             arguments.add(content.getContent().toString());
         }

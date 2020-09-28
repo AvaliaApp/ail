@@ -1,8 +1,10 @@
 package app.avalia.compiler;
 
 import app.avalia.compiler.bytecode.BytecodeVisitor;
-import app.avalia.compiler.bytecode.LabelStack;
+import app.avalia.compiler.bytecode.observer.LabelObserver;
+import app.avalia.compiler.bytecode.observer.StackObserver;
 import app.avalia.compiler.lang.*;
+import app.avalia.compiler.lang.error.AILErrorLogger;
 import app.avalia.compiler.pool.BaseFunctions;
 import app.avalia.compiler.pool.BaseInstructions;
 import app.avalia.compiler.provider.AILProvider;
@@ -30,7 +32,13 @@ public class AILCompiler {
                 }
                 provider.end(visitor, function);
 
-                LabelStack.clear();
+                LabelObserver.flush();
+
+                if (!StackObserver.isEmpty())
+                    AILErrorLogger.logError(function.getLine(), "type stack is not empty "
+                            + "(" + StackObserver.getStackSize() + " > 0)");
+
+                StackObserver.flush();
             }
         }
         classProvider.end(visitor, traversedClass);

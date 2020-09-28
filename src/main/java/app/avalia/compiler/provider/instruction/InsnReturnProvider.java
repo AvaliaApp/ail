@@ -21,9 +21,7 @@ public class InsnReturnProvider implements AILProvider<AILInstruction> {
             return;
         }
 
-        AILArgument argument = component.getArguments().get(0);
-        AILTypeContent content = (AILTypeContent) argument.getContent();
-        AILType type = content.getType();
+        AILType type = component.asType(0).get().getType();
 
         visitor.current().visitInsn(type.toRetInsn());
     }

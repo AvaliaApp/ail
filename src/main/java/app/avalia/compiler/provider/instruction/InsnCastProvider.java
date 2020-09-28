@@ -17,13 +17,8 @@ public class InsnCastProvider implements AILProvider<AILInstruction> {
 
     @Override
     public void begin(BytecodeVisitor visitor, AILInstruction component) {
-        AILArgument argument = component.getArguments().get(0);
-        AILTypeContent content = (AILTypeContent) argument.getContent();
-        AILType origin = content.getType();
-
-        AILArgument argument1 = component.getArguments().get(1);
-        AILTypeContent content1 = (AILTypeContent) argument1.getContent();
-        AILType target = content1.getType();
+        AILType origin = component.asType(0).get().getType();
+        AILType target = component.asType(1).get().getType();
 
         visitCast(visitor, origin, target);
     }
@@ -33,6 +28,7 @@ public class InsnCastProvider implements AILProvider<AILInstruction> {
     }
 
     public static void visitCast(BytecodeVisitor visitor, AILType origin, AILType target) {
+        System.out.println("CASTING " + origin.name() + " TO " + target.name());
         if (origin == AILType.TEXT || target == AILType.TEXT) {
             ParseInvoker invoker = ParseProcess.get(origin, target);
             if (invoker == null)

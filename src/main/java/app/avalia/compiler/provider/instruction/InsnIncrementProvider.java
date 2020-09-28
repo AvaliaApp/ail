@@ -14,10 +14,7 @@ public class InsnIncrementProvider implements AILProvider<AILInstruction> {
 
     @Override
     public void begin(BytecodeVisitor visitor, AILInstruction component) {
-        AILArgument argument = component.getArguments().get(0);
-        AILValueContent content = (AILValueContent) argument.getContent();
-        AILType type = content.getType();
-        int value = (int) content.getContent();
+        int value = (int) component.asValue(0).get().getContent();
 
         visitor.current().visitIincInsn(component.getId(), value);
     }

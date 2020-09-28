@@ -1,6 +1,7 @@
 package app.avalia.compiler.provider.instruction;
 
 import app.avalia.compiler.bytecode.BytecodeVisitor;
+import app.avalia.compiler.bytecode.observer.StackObserver;
 import app.avalia.compiler.lang.AILArgument;
 import app.avalia.compiler.lang.AILInstruction;
 import app.avalia.compiler.lang.content.AILValueContent;
@@ -14,12 +15,11 @@ public class InsnPushProvider implements AILProvider<AILInstruction> {
 
     @Override
     public void begin(BytecodeVisitor visitor, AILInstruction component) {
-        AILArgument argument = component.getArguments().get(0);
-        AILValueContent content = (AILValueContent) argument.getContent();
-        AILType type = content.getType();
-        Object val = content.getContent();
+        AILType type = component.asValue(0).get().getType();
+        Object val = component.asValue(0).get().getContent();
 
         visitor.visitPushInsn(type, visitor.current(), val);
+        StackObserver.push(type);
     }
 
     @Override

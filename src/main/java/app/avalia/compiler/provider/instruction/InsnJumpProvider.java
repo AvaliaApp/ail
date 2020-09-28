@@ -1,7 +1,7 @@
 package app.avalia.compiler.provider.instruction;
 
 import app.avalia.compiler.bytecode.BytecodeVisitor;
-import app.avalia.compiler.bytecode.LabelStack;
+import app.avalia.compiler.bytecode.observer.LabelObserver;
 import app.avalia.compiler.lang.AILInstruction;
 import app.avalia.compiler.provider.AILProvider;
 import org.objectweb.asm.Label;
@@ -14,7 +14,7 @@ public class InsnJumpProvider implements AILProvider<AILInstruction> {
 
     @Override
     public void begin(BytecodeVisitor visitor, AILInstruction component) {
-        Label label = LabelStack.markOrGet(component.getId());
+        Label label = LabelObserver.markOrGet(component.getId());
         visitor.current().visitJumpInsn(Opcodes.GOTO, label);
     }
 

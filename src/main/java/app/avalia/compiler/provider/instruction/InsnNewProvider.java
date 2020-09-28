@@ -18,6 +18,8 @@ public class InsnNewProvider implements AILProvider<AILInstruction> {
 
         InvokePoolInfo pool = BasePoolProvider.getInvokePool().get(id);
 
+        // todo auto casting
+        // todo pop stack
         visitor.current().visitTypeInsn(Opcodes.NEW, pool.getInstanceSig());
         visitor.current().visitInsn(Opcodes.DUP);
     }

@@ -1,7 +1,9 @@
 package app.avalia.compiler.provider.function;
 
 import app.avalia.compiler.bytecode.BytecodeVisitor;
+import app.avalia.compiler.bytecode.observer.StackObserver;
 import app.avalia.compiler.lang.AILFunction;
+import app.avalia.compiler.lang.type.AILType;
 import app.avalia.compiler.provider.AILProvider;
 import org.objectweb.asm.Opcodes;
 
@@ -21,6 +23,8 @@ public class FuncBukkitEventProvider implements AILProvider<AILFunction> {
     @Override
     public void begin(BytecodeVisitor visitor, AILFunction component) {
         visitor.visitEvent(decapitalize(component.getName()), descriptor);
+        StackObserver.store(0, AILType.REF); // reference to self
+        StackObserver.store(1, AILType.REF); // event var
     }
 
     @Override

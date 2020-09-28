@@ -1,4 +1,4 @@
-package app.avalia.compiler.bytecode;
+package app.avalia.compiler.bytecode.observer;
 
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
@@ -6,7 +6,7 @@ import org.objectweb.asm.MethodVisitor;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LabelStack {
+public class LabelObserver {
 
     private static final Map<Integer, Label> labels = new HashMap<>();
 
@@ -36,7 +36,7 @@ public class LabelStack {
         return label;
     }
 
-    public static void clear() {
+    public static void flush() {
         labels.clear();
     }
 

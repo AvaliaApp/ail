@@ -1,9 +1,11 @@
 package app.avalia.compiler.lang;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import app.avalia.compiler.lang.content.AILDelegateContent;
+import app.avalia.compiler.lang.content.AILTypeContent;
+import app.avalia.compiler.lang.content.AILValueContent;
+import app.avalia.compiler.lang.type.AILType;
+
+import java.util.*;
 
 public class AILInstruction extends AILComponent {
 
@@ -55,5 +57,35 @@ public class AILInstruction extends AILComponent {
 
     public List<AILArgument> getArguments() {
         return arguments;
+    }
+
+    public Optional<AILValueContent> asValue(int position) {
+        if (position >= this.getArguments().size())
+            return Optional.empty();
+
+        AILArgument argument = this.getArguments()
+                .get(position);
+
+        return Optional.of((AILValueContent)argument.getContent());
+    }
+
+    public Optional<AILTypeContent> asType(int position) {
+        if (position >= this.getArguments().size())
+            return Optional.empty();
+
+        AILArgument argument = this.getArguments()
+                .get(position);
+
+        return Optional.of((AILTypeContent)argument.getContent());
+    }
+
+    public Optional<AILDelegateContent> asDelegate(int position) {
+        if (position >= this.getArguments().size())
+            return Optional.empty();
+
+        AILArgument argument = this.getArguments()
+                .get(position);
+
+        return Optional.of((AILDelegateContent)argument.getContent());
     }
 }

@@ -1,6 +1,7 @@
 package app.avalia.compiler.provider.instruction;
 
 import app.avalia.compiler.bytecode.BytecodeVisitor;
+import app.avalia.compiler.bytecode.observer.StackObserver;
 import app.avalia.compiler.lang.AILArgument;
 import app.avalia.compiler.lang.AILInstruction;
 import app.avalia.compiler.lang.content.AILValueContent;
@@ -20,10 +21,9 @@ public class InsnIfProvider implements AILProvider<AILInstruction> {
 
     @Override
     public void begin(BytecodeVisitor visitor, AILInstruction component) {
-        AILArgument argument = component.getArguments().get(0);
-        AILValueContent content = (AILValueContent) argument.getContent();
-        AILType type = content.getType();
-        String val = content.getContent().toString();
+        String val = component.asValue(0).get().getContent().toString();
+
+        StackObserver.pop(2);
 
         label = new Label();
         visitor.current().visitJumpInsn(getCondition(val), label);

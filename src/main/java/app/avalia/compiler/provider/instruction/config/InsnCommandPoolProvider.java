@@ -21,13 +21,8 @@ public class InsnCommandPoolProvider implements AILProvider<AILInstruction> {
     public void begin(BytecodeVisitor visitor, AILInstruction component) {
         CommandPoolInfo info = new CommandPoolInfo();
 
-        AILArgument argument = component.getArguments().get(0);
-        AILDelegateContent content = (AILDelegateContent) argument.getContent();
-        String target = content.getDelegateTarget();
-
-        AILArgument argument1 = component.getArguments().get(1);
-        AILValueContent content1 = (AILValueContent) argument1.getContent();
-        String name = content1.getContent().toString();
+        String target = component.asDelegate(0).get().getDelegateTarget();
+        String name = component.asValue(1).get().getContent().toString();
 
         info.setTarget(target);
         info.setName(name);
