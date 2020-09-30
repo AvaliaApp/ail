@@ -5,14 +5,11 @@ import app.avalia.compiler.bytecode.BytecodeVisitor;
 import app.avalia.compiler.bytecode.observer.StackObserver;
 import app.avalia.compiler.lang.AILInstruction;
 import app.avalia.compiler.lang.type.AILType;
-import app.avalia.compiler.pool.BaseInstructions;
 import app.avalia.compiler.provider.AILProvider;
-import app.avalia.compiler.provider.property.IgnoreInnerInstructions;
+import app.avalia.compiler.provider.attribute.IgnoreInnerInstructions;
 import org.objectweb.asm.Opcodes;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 @IgnoreInnerInstructions
 public class InsnFormatProvider implements AILProvider<AILInstruction> {

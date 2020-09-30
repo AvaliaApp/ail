@@ -9,7 +9,7 @@ import app.avalia.compiler.pool.BaseFunctions;
 import app.avalia.compiler.pool.BaseInstructions;
 import app.avalia.compiler.provider.AILProvider;
 import app.avalia.compiler.provider.ClassProvider;
-import app.avalia.compiler.provider.property.IgnoreInnerInstructions;
+import app.avalia.compiler.provider.attribute.IgnoreInnerInstructions;
 
 import java.util.Collection;
 
@@ -29,7 +29,7 @@ public class AILCompiler {
                 AILProvider<AILFunction> provider = BaseFunctions.getProvider(function.getName());
                 provider.begin(visitor, function);
                 {
-                    if (!provider.getClass().isAnnotationPresent(IgnoreInnerInstructions.class))
+                    if (!function.hasAttribute(IgnoreInnerInstructions.class))
                         recursiveInstructionCompile(visitor, function.getInstructions());
                 }
                 provider.end(visitor, function);
@@ -56,7 +56,7 @@ public class AILCompiler {
             AILProvider<AILInstruction> insnProvider = BaseInstructions.getProvider(instruction.getName());
             insnProvider.begin(visitor, instruction);
             {
-                if (!insnProvider.getClass().isAnnotationPresent(IgnoreInnerInstructions.class))
+                if (!instruction.hasAttribute(IgnoreInnerInstructions.class))
                     recursiveInstructionCompile(visitor, instruction.getInstructions());
             }
             insnProvider.end(visitor, instruction);

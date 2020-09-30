@@ -1,10 +1,29 @@
 plugins {
     id 'java'
     id 'antlr'
+    id 'maven-publish'
 }
 
 group 'app.avalia'
 version 'b100'
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/avaliaapp/ail")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
 
 configurations {
     compile {
@@ -27,7 +46,8 @@ jar {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
 
-    destinationDir = file("/Users/socketbyte/Documents/JavaProjects/avalia/cmake-build-debug/compiler")
+    //destinationDir = file("C:\\Cloud\\CppProjects\\avalia\\cmake-build-debug\\compiler")
+    //destinationDir = file("/Users/socketbyte/Documents/JavaProjects/avalia/cmake-build-debug/compiler")
 }
 
 generateGrammarSource {

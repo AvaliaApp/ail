@@ -8,9 +8,11 @@ import app.avalia.compiler.lang.*;
 import app.avalia.compiler.lang.content.AILDelegateContent;
 import app.avalia.compiler.lang.content.AILTypeContent;
 import app.avalia.compiler.lang.content.AILValueContent;
+import app.avalia.compiler.pool.BaseFunctions;
 import app.avalia.compiler.pool.BaseInstructions;
 import app.avalia.compiler.lang.type.AILContentType;
 import app.avalia.compiler.lang.type.AILType;
+import app.avalia.compiler.provider.AILProvider;
 import org.antlr.v4.runtime.ANTLRErrorListener;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -19,6 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 public class AILTraverser {
 
@@ -83,6 +86,12 @@ public class AILTraverser {
                 function.getInstructions().add(insnContext.accept(instructionVisitor));
             }
             function.setName(ctx.name().getText());
+
+            AILProvider<AILFunction> provider = BaseFunctions.getProvider(function.getName());
+            provider.parse(function);
+
+            function.getAttributes()
+                    .addAll(Arrays.asList(provider.getClass().getAnnotations()));
             return function;
         }
     }
@@ -115,8 +124,11 @@ public class AILTraverser {
                     instruction.getArguments().add(argContext.accept(visitor));
             }
 
-            BaseInstructions.getProvider(instruction.getName())
-                    .parse(instruction);
+            AILProvider<AILInstruction> provider = BaseInstructions.getProvider(instruction.getName());
+            provider.parse(instruction);
+
+            instruction.getAttributes()
+                    .addAll(Arrays.asList(provider.getClass().getAnnotations()));
 
             return instruction;
         }

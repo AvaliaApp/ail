@@ -1,4 +1,4 @@
-package app.avalia.compiler.provider.property;
+package app.avalia.compiler.provider.attribute;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

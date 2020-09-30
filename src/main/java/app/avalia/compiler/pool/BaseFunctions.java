@@ -11,7 +11,7 @@ public class BaseFunctions {
 
     private static final Map<String, AILProvider<AILFunction>> functions = new HashMap<>();
 
-    public static void load() {
+    static {
         push("OnEnable", new FuncEnableEventProvider());
     }
 

@@ -2,6 +2,7 @@ package app.avalia.compiler;
 
 import app.avalia.antlr.AILLexer;
 import app.avalia.antlr.AILParser;
+import app.avalia.compiler.extension.AILExtensions;
 import app.avalia.compiler.lang.error.AILErrorLoggerBase;
 import app.avalia.compiler.bytecode.jar.JarPackager;
 import app.avalia.compiler.lang.AILClass;
@@ -11,9 +12,12 @@ import org.antlr.v4.gui.TreeViewer;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class AILMain {
@@ -31,9 +35,6 @@ public class AILMain {
     }
 
     public static void main(String[] args) throws IOException {
-        BaseInstructions.load();
-        BaseFunctions.load();
-
         if (args.length == 0) {
             System.out.println("Invalid path to AIL class");
             System.exit(-1);
@@ -50,11 +51,28 @@ public class AILMain {
             }
         }
         long startFull = System.currentTimeMillis();
-        System.out.println("Compiling...");
+        System.out.println("Loading extensions...");
         long start = System.currentTimeMillis();
 
-        AILClass clazz = AILTraverser.traverse(args[0]);
+        Set<String> paths = new HashSet<>();
+        File dir = new File(System.getProperty("user.dir"));
+        File[] files = dir.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.getName().endsWith(".jar"))
+                    paths.add(file.getAbsolutePath());
+            }
+            AILExtensions.loadAll(paths);
+        }
+
         long diff = System.currentTimeMillis() - start;
+        System.out.println("Loaded extensions! (" + TimeUnit.MILLISECONDS.toMillis(diff) + "ms)");
+
+        System.out.println("Compiling...");
+        start = System.currentTimeMillis();
+
+        AILClass clazz = AILTraverser.traverse(args[0]);
+        diff = System.currentTimeMillis() - start;
         System.out.println("Parsed! (" + TimeUnit.MILLISECONDS.toMillis(diff) + "ms)");
 
         start = System.currentTimeMillis();
