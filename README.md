@@ -1,4 +1,4 @@
-# Avalia Compiler (IL)
+# Avalia Compiler (IL) ![ail](https://github.com/AvaliaApp/ail/workflows/ail/badge.svg)
 **Avalia Intermediate Language** is a sophisticated tool that allows apps or custom languages to easily create fully-featured Minecraft plugins by generating simple to use and understand AIL classes.
 
 ### Motivation
