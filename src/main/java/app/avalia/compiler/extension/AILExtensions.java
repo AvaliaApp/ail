@@ -75,7 +75,8 @@ public class AILExtensions {
         if (extension == null) {
             throw new RuntimeException("Could not load an extension from " + path);
         }
-        return extensions.put(extension.getName(), extension);
+        extensions.put(extension.getName(), extension);
+        return extension;
     }
 
 }

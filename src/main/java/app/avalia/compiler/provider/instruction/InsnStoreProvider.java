@@ -26,8 +26,6 @@ public class InsnStoreProvider implements AILProvider<AILInstruction> {
                 return; // todo error handling
             AILType last = lastArr[0];
 
-            System.out.println(type.name() + ", " + last.name());
-
             // todo check if auto-casting is enabled
             if (type != last)
                 InsnCastProvider.visitCast(visitor, last, type);

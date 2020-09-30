@@ -55,7 +55,7 @@ public class AILMain {
         long start = System.currentTimeMillis();
 
         Set<String> paths = new HashSet<>();
-        File dir = new File(System.getProperty("user.dir"));
+        File dir = new File(System.getProperty("user.dir") + File.separator + "extensions");
         File[] files = dir.listFiles();
         if (files != null) {
             for (File file : files) {

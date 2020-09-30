@@ -7,6 +7,8 @@ plugins {
 group 'app.avalia'
 version 'b100'
 
+sourceCompatibility = 1.8
+
 publishing {
     repositories {
         maven {

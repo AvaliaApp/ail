@@ -88,10 +88,12 @@ public class AILTraverser {
             function.setName(ctx.name().getText());
 
             AILProvider<AILFunction> provider = BaseFunctions.getProvider(function.getName());
-            provider.parse(function);
+            if (provider != null) {
+                provider.parse(function);
 
-            function.getAttributes()
-                    .addAll(Arrays.asList(provider.getClass().getAnnotations()));
+                function.getAttributes()
+                        .addAll(Arrays.asList(provider.getClass().getAnnotations()));
+            }
             return function;
         }
     }
@@ -125,10 +127,12 @@ public class AILTraverser {
             }
 
             AILProvider<AILInstruction> provider = BaseInstructions.getProvider(instruction.getName());
-            provider.parse(instruction);
+            if (provider != null) {
+                provider.parse(instruction);
 
-            instruction.getAttributes()
-                    .addAll(Arrays.asList(provider.getClass().getAnnotations()));
+                instruction.getAttributes()
+                        .addAll(Arrays.asList(provider.getClass().getAnnotations()));
+            }
 
             return instruction;
         }

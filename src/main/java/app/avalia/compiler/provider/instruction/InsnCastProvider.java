@@ -28,7 +28,6 @@ public class InsnCastProvider implements AILProvider<AILInstruction> {
     }
 
     public static void visitCast(BytecodeVisitor visitor, AILType origin, AILType target) {
-        System.out.println("CASTING " + origin.name() + " TO " + target.name());
         if (origin == AILType.TEXT || target == AILType.TEXT) {
             ParseInvoker invoker = ParseProcess.get(origin, target);
             if (invoker == null)
