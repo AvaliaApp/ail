@@ -36,6 +36,7 @@ public class BaseInstructions {
         instructions.put("clis", new InsnCommandListenProvider());
         instructions.put("new", new InsnNewProvider());
         instructions.put("cast", new InsnCastProvider());
+        instructions.put("print", new InsnPrintProvider());
     }
 
     public static AILProvider<AILInstruction> getProvider(String insnName) {

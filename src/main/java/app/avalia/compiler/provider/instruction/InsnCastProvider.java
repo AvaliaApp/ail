@@ -35,7 +35,7 @@ public class InsnCastProvider implements AILProvider<AILInstruction> {
                 return;
 
             if (invoker == ParseInvoker.CHAR_AT)
-                visitor.visitPushInsn(AILType.INT, visitor.current(), 0);
+                visitor.visitPushInsn(AILType.INT, 0);
 
             invoker.invoke(visitor);
             return;

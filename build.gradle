@@ -26,6 +26,8 @@ jar {
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
+
+    destinationDir = file("/Users/socketbyte/Documents/JavaProjects/avalia/cmake-build-debug/compiler")
 }
 
 generateGrammarSource {

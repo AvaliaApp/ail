@@ -18,7 +18,7 @@ public class InsnPushProvider implements AILProvider<AILInstruction> {
         AILType type = component.asValue(0).get().getType();
         Object val = component.asValue(0).get().getContent();
 
-        visitor.visitPushInsn(type, visitor.current(), val);
+        visitor.visitPushInsn(type, val);
         StackObserver.push(type);
     }
 

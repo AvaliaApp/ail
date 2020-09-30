@@ -103,8 +103,6 @@ public class AILTraverser {
             }
             instruction.setName(ctx.name().getText());
             if (ctx.instruction() != null && ctx.instruction().size() > 0) {
-                instruction.setHasInnerInstructions(true);
-
                 InstructionVisitor visitor = new InstructionVisitor();
                 for (AILParser.InstructionContext insnContext : ctx.instruction()) {
                     instruction.getInstructions().add(insnContext.accept(visitor));

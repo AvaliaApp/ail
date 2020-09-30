@@ -14,7 +14,7 @@ public class AILInstruction extends AILComponent {
     private boolean hasId;
     private int id;
 
-    private boolean hasInnerInstructions;
+    private boolean compileInnerInstructions;
     private final List<AILInstruction> instructions = new ArrayList<>();
 
     private final List<AILArgument> arguments = new ArrayList<>();
@@ -43,12 +43,12 @@ public class AILInstruction extends AILComponent {
         this.id = id;
     }
 
-    public boolean hasInnerInstructions() {
-        return hasInnerInstructions;
+    public boolean isCompileInnerInstructions() {
+        return compileInnerInstructions;
     }
 
-    public void setHasInnerInstructions(boolean hasInnerInstructions) {
-        this.hasInnerInstructions = hasInnerInstructions;
+    public void setCompileInnerInstructions(boolean compileInnerInstructions) {
+        this.compileInnerInstructions = compileInnerInstructions;
     }
 
     public List<AILInstruction> getInstructions() {

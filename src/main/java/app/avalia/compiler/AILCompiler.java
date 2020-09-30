@@ -9,6 +9,7 @@ import app.avalia.compiler.pool.BaseFunctions;
 import app.avalia.compiler.pool.BaseInstructions;
 import app.avalia.compiler.provider.AILProvider;
 import app.avalia.compiler.provider.ClassProvider;
+import app.avalia.compiler.provider.property.IgnoreInnerInstructions;
 
 import java.util.Collection;
 
@@ -28,7 +29,8 @@ public class AILCompiler {
                 AILProvider<AILFunction> provider = BaseFunctions.getProvider(function.getName());
                 provider.begin(visitor, function);
                 {
-                    recursiveInstructionCompile(visitor, function.getInstructions());
+                    if (!provider.getClass().isAnnotationPresent(IgnoreInnerInstructions.class))
+                        recursiveInstructionCompile(visitor, function.getInstructions());
                 }
                 provider.end(visitor, function);
 
@@ -46,7 +48,7 @@ public class AILCompiler {
         return visitor.get().toByteArray();
     }
 
-    private static void recursiveInstructionCompile(BytecodeVisitor visitor, Collection<AILInstruction> instructions) {
+    public static void recursiveInstructionCompile(BytecodeVisitor visitor, Collection<AILInstruction> instructions) {
         if (instructions.isEmpty())
             return;
 
@@ -54,7 +56,8 @@ public class AILCompiler {
             AILProvider<AILInstruction> insnProvider = BaseInstructions.getProvider(instruction.getName());
             insnProvider.begin(visitor, instruction);
             {
-                recursiveInstructionCompile(visitor, instruction.getInstructions());
+                if (!insnProvider.getClass().isAnnotationPresent(IgnoreInnerInstructions.class))
+                    recursiveInstructionCompile(visitor, instruction.getInstructions());
             }
             insnProvider.end(visitor, instruction);
         }

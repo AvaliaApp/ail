@@ -22,7 +22,7 @@ public class BytecodeVisitor {
         return CURRENT_METHOD_VISITOR;
     }
 
-    public void visitPushInsn(AILType type, MethodVisitor visitor, Object value) {
+    public void visitPushInsn(AILType type, Object value) {
         switch (type) {
             case INT:
             case BYTE:
@@ -32,48 +32,48 @@ public class BytecodeVisitor {
                 int val = (int)value;
                 if (val <= Short.MAX_VALUE && val >= Short.MIN_VALUE) {
                     if (val <= 5 && val >= -1) {
-                        visitor.visitInsn(val + 3);
+                        current().visitInsn(val + 3);
                         break;
                     }
                     if (val <= Byte.MAX_VALUE && val >= Byte.MIN_VALUE) {
-                        visitor.visitIntInsn(Opcodes.BIPUSH, val);
+                        current().visitIntInsn(Opcodes.BIPUSH, val);
                     } else {
-                        visitor.visitIntInsn(Opcodes.SIPUSH, val);
+                        current().visitIntInsn(Opcodes.SIPUSH, val);
                     }
                     break;
                 }
-                visitor.visitLdcInsn(val);
+                current().visitLdcInsn(val);
                 break;
             }
             case LONG:
                 long val0 = (long)value;
                 if (val0 == 0)
-                    visitor.visitInsn(Opcodes.LCONST_0);
+                    current().visitInsn(Opcodes.LCONST_0);
                 if (val0 == 1)
-                    visitor.visitInsn(Opcodes.LCONST_1);
-                else visitor.visitLdcInsn(val0);
+                    current().visitInsn(Opcodes.LCONST_1);
+                else current().visitLdcInsn(val0);
                 break;
             case FLOAT:
                 float val1 = (float)value;
                 if (val1 == 0)
-                    visitor.visitInsn(Opcodes.FCONST_0);
+                    current().visitInsn(Opcodes.FCONST_0);
                 if (val1 == 1)
-                    visitor.visitInsn(Opcodes.FCONST_1);
+                    current().visitInsn(Opcodes.FCONST_1);
                 if (val1 == 2)
-                    visitor.visitInsn(Opcodes.FCONST_2);
-                else visitor.visitLdcInsn(val1);
+                    current().visitInsn(Opcodes.FCONST_2);
+                else current().visitLdcInsn(val1);
                 break;
             case DOUBLE:
                 double val2 = (double)value;
                 if (val2 == 0)
-                    visitor.visitInsn(Opcodes.DCONST_0);
+                    current().visitInsn(Opcodes.DCONST_0);
                 if (val2 == 1)
-                    visitor.visitInsn(Opcodes.DCONST_1);
-                else visitor.visitLdcInsn(val2);
+                    current().visitInsn(Opcodes.DCONST_1);
+                else current().visitLdcInsn(val2);
                 break;
             case REF:
             case TEXT:
-                visitor.visitLdcInsn(value);
+                current().visitLdcInsn(value);
                 break;
         }
     }
