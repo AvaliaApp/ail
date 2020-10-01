@@ -242,5 +242,70 @@ CommandExecutor {
         return true;
     }
 }
-
 ```
+
+### Extensions
+AIL Compiler features basic extension support.
+
+- Add the compiler as a dependency.
+```groovy
+repositories {
+    maven {
+        url 'https://repo.socketbyte.pl/snapshots'
+    }
+}
+
+dependencies {
+    compileOnly group: 'app.avalia', name: 'ail', version: 'b100-SNAPSHOT'
+}
+``` 
+- Create a class that implements `AILExtension` interface
+```java
+public class ExampleExtension implements AILExtension {
+    @Override
+    public String getName() {
+        return "ExampleExtension";
+    }
+
+    @Override
+    public String getVersion() {
+        return "1.0";
+    }
+
+    @Override
+    public void fetchInstructions(Map<String, AILProvider<AILInstruction>> map) {
+        map.put("example", new ExampleInstruction());
+    }
+
+    @Override
+    public void fetchFunctions(Map<String, AILProvider<AILFunction>> map) {
+    }
+}
+```
+- You can now create custom functions/instructions on demand!
+```java
+@IgnoreInnerInstructions
+public class ExampleInstruction implements AILProvider<AILInstruction> {
+    @Override
+    public void parse(AILInstruction instruction) {
+        System.out.println("This will be executed while parsing/error-checking!");
+    }
+
+    @Override
+    public void begin(BytecodeVisitor visitor, AILInstruction instruction) {
+        // All bytecode changes are made through BytecodeVisitor
+        visitor.current().visitInsn(Opcodes.ICONST_3);
+
+        // It's very important to mark all your stack changes
+        StackObserver.push(AILType.INT);
+    }
+
+    @Override
+    public void end(BytecodeVisitor visitor, AILInstruction instruction) {
+    }
+}
+```
+- Load your extension by placing the compiled .jar to `extensions/` folder (where your compiler resides) 
+
+### License
+AIL Compiler uses [MIT License](https://github.com/AvaliaApp/ail/blob/master/LICENSE) as it's license.
