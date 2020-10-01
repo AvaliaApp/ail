@@ -14,6 +14,8 @@ Our long-term goal is to create a platform that can be used in all kinds of appl
 For this goal to happen, we need to create a stable, well-designed and well-documented instruction set for all kinds of often uses to make generating Minecraft plugins easier than ever.
 
 - Support for array types
+- More int-type operations (mul, div)
+- Field support (for example getstatic/getfield)
 - Referenced objects casting
 - Optimize parsing
 - Command arguments
