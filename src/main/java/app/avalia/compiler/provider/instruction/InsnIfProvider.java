@@ -43,8 +43,8 @@ public class InsnIfProvider implements AILProvider<AILInstruction> {
     }
 
     public enum IfType {
-        NU("=n", IFNONNULL, 1),
-        NN("!n", IFNULL, 1),
+        NU("==n", IFNONNULL, 1),
+        NN("!=n", IFNULL, 1),
         GT(">", IF_ICMPLE, 2),
         LT("<", IF_ICMPGE, 2),
         GE(">=",  IF_ICMPLT, 2),
