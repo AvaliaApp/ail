@@ -176,8 +176,8 @@ decl OnBlockBreak {
     push(10)           // load 10
 
     if('<') {          // if condition not met, jump to the end
-        load$2(ref)
-        push(text "this will be printed 10 times!")
+        load$2
+        push("this will be printed 10 times!")
         invoke$2
 
         inc$3(1)       // increase i by 1 (i++)
