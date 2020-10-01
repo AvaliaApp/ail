@@ -5,23 +5,23 @@ plugins {
 }
 
 group 'app.avalia'
-version 'b100'
+version 'b100-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
 publishing {
     repositories {
         maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/avaliaapp/ail")
+            name = "SocketByteRepo"
+            url = uri("https://repo.socketbyte.pl/snapshots")
             credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+                username = project.findProperty("pub.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("pub.token") ?: System.getenv("TOKEN")
             }
         }
     }
     publications {
-        gpr(MavenPublication) {
+        distribution(MavenPublication) {
             from(components.java)
         }
     }
@@ -47,9 +47,6 @@ jar {
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
-
-    //destinationDir = file("C:\\Cloud\\CppProjects\\avalia\\cmake-build-debug\\compiler")
-    //destinationDir = file("/Users/socketbyte/Documents/JavaProjects/avalia/cmake-build-debug/compiler")
 }
 
 generateGrammarSource {

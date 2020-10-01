@@ -28,7 +28,7 @@ public class FuncBukkitCommandProvider implements AILProvider<AILFunction> {
 
     @Override
     public void end(BytecodeVisitor visitor, AILFunction component) {
-        visitor.visitPushInsn(AILType.BOOL, 1);
+        visitor.visitPushInsn(AILType.BOOL, true);
         visitor.current().visitInsn(AILType.BOOL.toRetInsn());
         visitor.current().visitMaxs(0, 0);
         visitor.current().visitEnd();

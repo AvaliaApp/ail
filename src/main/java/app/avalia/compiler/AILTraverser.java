@@ -212,7 +212,6 @@ public class AILTraverser {
                         content.setType(AILType.BOOL);
                         break;
                 }
-
                 content.setContent(content.getType().cast(value));
 
                 argument.setContent(content);

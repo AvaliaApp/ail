@@ -60,7 +60,7 @@ public class InsnCommandListenProvider implements AILProvider<AILInstruction> {
 
     @Override
     public void end(BytecodeVisitor visitor, AILInstruction component) {
-        visitor.visitPushInsn(AILType.BOOL, 1);
+        visitor.visitPushInsn(AILType.BOOL, true);
         visitor.current().visitInsn(AILType.BOOL.toRetInsn());
         visitor.current().visitMaxs(0, 0);
         visitor.current().visitEnd();

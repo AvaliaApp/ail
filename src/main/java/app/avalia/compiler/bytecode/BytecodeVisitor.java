@@ -24,11 +24,25 @@ public class BytecodeVisitor {
 
     public void visitPushInsn(AILType type, Object value) {
         switch (type) {
-            case INT:
-            case BYTE:
-            case CHAR:
             case SHORT:
-            case BOOL: {
+                short vals = (short)value;
+                current().visitIntInsn(Opcodes.SIPUSH, vals);
+                break;
+            case BYTE:
+                byte valb = (byte)value;
+                current().visitIntInsn(Opcodes.BIPUSH, valb);
+                break;
+            case BOOL:
+                boolean valbool = (boolean)value;
+                if (valbool)
+                    current().visitInsn(Opcodes.ICONST_1);
+                else current().visitInsn(Opcodes.ICONST_0);
+                break;
+            case CHAR:
+                char valc = (char)value;
+                current().visitIntInsn(Opcodes.BIPUSH, valc);
+                break;
+            case INT: {
                 int val = (int)value;
                 if (val <= Short.MAX_VALUE && val >= Short.MIN_VALUE) {
                     if (val <= 5 && val >= -1) {
