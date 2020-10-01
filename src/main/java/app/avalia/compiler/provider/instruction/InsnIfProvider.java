@@ -23,8 +23,6 @@ public class InsnIfProvider implements AILProvider<AILInstruction> {
     public void begin(BytecodeVisitor visitor, AILInstruction component) {
         String val = component.asValue(0).get().getContent().toString();
 
-        StackObserver.pop(2);
-
         label = new Label();
         visitor.current().visitJumpInsn(getCondition(val), label);
     }
@@ -38,33 +36,48 @@ public class InsnIfProvider implements AILProvider<AILInstruction> {
         for (IfType type : IfType.values()) {
             if (!type.str.equals(str))
                 continue;
+            StackObserver.pop(type.pops);
             return type.opcode;
         }
         return -1;
     }
 
     public enum IfType {
-        NU("=n", IFNONNULL),
-        NN("!n", IFNULL),
-        GT(">", IF_ICMPLE),
-        LT("<", IF_ICMPGE),
-        GE(">=",  IF_ICMPLT),
-        LE("<=",  IF_ICMPGT),
-        EQ("==", IF_ICMPNE),
-        NE("!=", IF_ICMPEQ),
-        ZGT(">0", IFLE),
-        ZLT("<0", IFGE),
-        ZGE(">=0",  IFLT),
-        ZLE("<=0",  IFGT),
-        ZEQ("==0", IFNE),
-        ZNE("!=0", IFEQ);
+        NU("=n", IFNONNULL, 1),
+        NN("!n", IFNULL, 1),
+        GT(">", IF_ICMPLE, 2),
+        LT("<", IF_ICMPGE, 2),
+        GE(">=",  IF_ICMPLT, 2),
+        LE("<=",  IF_ICMPGT, 2),
+        EQ("==", IF_ICMPNE, 2),
+        NE("!=", IF_ICMPEQ, 2),
+        ZGT(">0", IFLE, 1),
+        ZLT("<0", IFGE, 1),
+        ZGE(">=0",  IFLT, 1),
+        ZLE("<=0",  IFGT, 1),
+        ZEQ("==0", IFNE, 1),
+        ZNE("!=0", IFEQ, 1);
 
-        int opcode;
-        String str;
+        private final int opcode;
+        private final String str;
+        private final int pops;
 
-        IfType(String str, int opcode) {
+        IfType(String str, int opcode, int pops) {
             this.str = str;
             this.opcode = opcode;
+            this.pops = pops;
+        }
+
+        public int getOpcode() {
+            return opcode;
+        }
+
+        public String getStr() {
+            return str;
+        }
+
+        public int getPops() {
+            return pops;
         }
     }
 }
