@@ -300,7 +300,7 @@ public class ExampleInstruction implements AILProvider<AILInstruction> {
         visitor.current().visitInsn(Opcodes.ICONST_3);
 
         // It's very important to mark all your stack changes
-        StackObserver.push(AILType.INT);
+        visitor.stack().push(AILType.INT);
     }
 
     @Override
