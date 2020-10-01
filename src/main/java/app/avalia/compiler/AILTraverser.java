@@ -25,6 +25,13 @@ import java.util.Arrays;
 
 public class AILTraverser {
 
+    public static AILClass traverseString(String code) {
+        AILLexer lexer = new AILLexer(CharStreams.fromString(code));
+        AILParser parser = new AILParser(new CommonTokenStream(lexer));
+
+        return new ClassVisitor().visitBase(parser.parse().base());
+    }
+
     public static AILClass traverseLocal(String classFile) throws IOException {
         InputStream stream = AILCompiler.class.getResourceAsStream(classFile);
 

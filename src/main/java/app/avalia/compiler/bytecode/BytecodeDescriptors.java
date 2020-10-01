@@ -19,8 +19,10 @@ public class BytecodeDescriptors {
                 continue; // todo (important) support for arrays/multiarrays
             }
             if (c == 'L') {
-                int end = descriptor.indexOf(';', i);
+                int end = descriptor.indexOf(';', i + 1);
+                System.out.println(end);
 
+                System.out.println(i + ", " + (end + 1));
                 String full = descriptor.substring(i, end + 1);
                 arguments.add(full.contains("java/lang/String") ? AILType.TEXT : AILType.REF);
 
@@ -31,8 +33,8 @@ public class BytecodeDescriptors {
 
                 continue;
             }
-
-            arguments.add(byDescriptor(descriptor));
+            System.out.println(c);
+            arguments.add(byDescriptor(String.valueOf(c)));
         }
         String returnType = descriptor.substring(endIndex + 1, descriptor.toCharArray().length)
                 .replace("[", ""); // todo (important) support for arrays/multiarrays

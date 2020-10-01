@@ -63,6 +63,12 @@ repositories {
 }
 
 dependencies {
+    testCompile 'org.junit.platform:junit-platform-launcher:1.7.0'
+    testCompile 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    testCompile 'org.junit.vintage:junit-vintage-engine:5.7.0'
+
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '2.0.2-beta'
+
     antlr group: 'org.antlr', name: 'antlr4', version: '4.8-1'
 
     compile group: 'org.antlr', name: 'antlr4-runtime', version: '4.8-1'
