@@ -22,8 +22,11 @@ For this goal to happen, we need to create a stable, well-designed and well-docu
 - Auto-casting multiple stack values
 - More helper instructions (like for loops)
 
-### Full documentation and Tutorials
-Currently, there's no available documentation as AIL Compiler is still in it's early stages. Stay tuned!
+### Usage
+```shell script
+java -jar compiler.jar class.ail [-error] 
+```
+* `-error` > only traversing, returns errors in `line:error` format
 
 ### Instruction Set (Version b100)
 | Instruction 	| Stack      	| Arguments                             	| Description                                        	|
