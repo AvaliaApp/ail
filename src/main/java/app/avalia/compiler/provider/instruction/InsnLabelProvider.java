@@ -12,7 +12,8 @@ public class InsnLabelProvider implements AILProvider<AILInstruction> {
 
     @Override
     public void begin(BytecodeVisitor visitor, AILInstruction component) {
-        visitor.current().visitLabel(LabelObserver.visit(visitor.current(), component.getId()));
+        visitor.current().visitLabel(
+                visitor.label().visit(visitor.current(), component.getId()));
     }
 
     @Override

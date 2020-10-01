@@ -24,9 +24,9 @@ public class InsnInvokeProvider implements AILProvider<AILInstruction> {
         BytecodeDescriptors.BytecodeMethodInfo info =
                 BytecodeDescriptors.parse(pool.getMethodSig());
 
-        StackObserver.pop(info.getArguments().size());
+        visitor.stack().pop(info.getArguments().size());
         if (pool.getInvokeType() != Opcodes.INVOKESTATIC)
-            StackObserver.pop(1);
+            visitor.stack().pop(1);
 
 //        AILType[] lastArr = StackObserver.last(info.getArguments().size());
 //        for (int i = 0; i < lastArr.length; i++) {
@@ -44,7 +44,7 @@ public class InsnInvokeProvider implements AILProvider<AILInstruction> {
                 pool.getMethodSig(), pool.getInvokeType() == Opcodes.INVOKEINTERFACE);
 
         if (!info.isVoid())
-            StackObserver.push(info.getReturnType());
+            visitor.stack().push(info.getReturnType());
     }
 
     @Override

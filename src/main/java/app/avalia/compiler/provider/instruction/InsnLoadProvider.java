@@ -22,14 +22,14 @@ public class InsnLoadProvider implements AILProvider<AILInstruction> {
         AILType type;
         if (content.isPresent())
             type = content.get().getType();
-        else type = StackObserver.byId(component.getId());
+        else type = visitor.stack().byId(component.getId());
 
         if (type != null) {
             System.out.println("LOADED " + type.name() + " AT " + component.getId());
         } else System.out.println("LOADED NULL AT " + component.getId());
 
         visitor.current().visitVarInsn(type.toLoadInsn(), component.getId());
-        StackObserver.push(type);
+        visitor.stack().push(type);
     }
 
     @Override

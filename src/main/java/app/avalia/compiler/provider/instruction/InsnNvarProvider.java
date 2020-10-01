@@ -20,7 +20,7 @@ public class InsnNvarProvider implements AILProvider<AILInstruction> {
 
         visitor.visitPushInsn(type, val);
         visitor.current().visitVarInsn(type.toStoreInsn(), component.getId());
-        StackObserver.store(component.getId(), type);
+        visitor.stack().store(component.getId(), type);
     }
 
     @Override

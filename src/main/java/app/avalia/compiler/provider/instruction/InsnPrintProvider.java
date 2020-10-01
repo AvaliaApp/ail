@@ -22,7 +22,7 @@ public class InsnPrintProvider implements AILProvider<AILInstruction> {
 
     @Override
     public void end(BytecodeVisitor visitor, AILInstruction component) {
-        AILType type = StackObserver.last(1)[0];
+        AILType type = visitor.stack().last(1)[0];
 
         InsnCastProvider.visitCast(visitor, type, AILType.TEXT);
 

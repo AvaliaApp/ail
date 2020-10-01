@@ -17,11 +17,11 @@ public class FuncBukkitCommandProvider implements AILProvider<AILFunction> {
                 "(Lorg/bukkit/command/CommandSender;" +
                         "Lorg/bukkit/command/Command;Ljava/lang/String;" +
                         "[Ljava/lang/String;)Z");
-        StackObserver.store(0, AILType.REF); // reference to self
-        StackObserver.store(1, AILType.REF);
-        StackObserver.store(2, AILType.REF);
-        StackObserver.store(3, AILType.TEXT);
-        StackObserver.store(4, AILType.REF); // todo should be text array instead of ref
+        visitor.stack().store(0, AILType.REF); // reference to self
+        visitor.stack().store(1, AILType.REF);
+        visitor.stack().store(2, AILType.REF);
+        visitor.stack().store(3, AILType.TEXT);
+        visitor.stack().store(4, AILType.REF); // todo should be text array instead of ref
         visitor.current().visitCode();
 
     }

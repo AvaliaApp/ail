@@ -15,7 +15,7 @@ public class FuncEnableEventProvider implements AILProvider<AILFunction> {
     @Override
     public void begin(BytecodeVisitor visitor, AILFunction component) {
         visitor.visitMethod("onEnable", "()V");
-        StackObserver.store(0, AILType.REF); // reference to self
+        visitor.stack().store(0, AILType.REF); // reference to self
     }
 
     @Override

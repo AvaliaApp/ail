@@ -23,8 +23,8 @@ public class FuncBukkitEventProvider implements AILProvider<AILFunction> {
     @Override
     public void begin(BytecodeVisitor visitor, AILFunction component) {
         visitor.visitEvent(decapitalize(component.getName()), descriptor);
-        StackObserver.store(0, AILType.REF); // reference to self
-        StackObserver.store(1, AILType.REF); // event var
+        visitor.stack().store(0, AILType.REF); // reference to self
+        visitor.stack().store(1, AILType.REF); // event var
     }
 
     @Override

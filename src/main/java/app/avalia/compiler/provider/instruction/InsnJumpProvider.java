@@ -14,7 +14,7 @@ public class InsnJumpProvider implements AILProvider<AILInstruction> {
 
     @Override
     public void begin(BytecodeVisitor visitor, AILInstruction component) {
-        Label label = LabelObserver.markOrGet(component.getId());
+        Label label = visitor.label().markOrGet(component.getId());
         visitor.current().visitJumpInsn(Opcodes.GOTO, label);
     }
 

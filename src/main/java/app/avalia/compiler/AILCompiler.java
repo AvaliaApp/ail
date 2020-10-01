@@ -34,13 +34,13 @@ public class AILCompiler {
                 }
                 provider.end(visitor, function);
 
-                LabelObserver.flush();
+                visitor.stack().flush();
 
-                if (!StackObserver.isEmpty())
+                if (!visitor.stack().isEmpty())
                     AILErrorLogger.logError(function.getLine(), "type stack is not empty "
-                            + "(" + StackObserver.getStackSize() + " > 0)");
+                            + "(" + visitor.stack().getStackSize() + " > 0)");
 
-                StackObserver.flush();
+                visitor.stack().flush();
             }
         }
         classProvider.end(visitor, traversedClass);

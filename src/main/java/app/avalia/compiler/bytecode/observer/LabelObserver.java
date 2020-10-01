@@ -8,25 +8,25 @@ import java.util.Map;
 
 public class LabelObserver {
 
-    private static final Map<Integer, Label> labels = new HashMap<>();
+    private final Map<Integer, Label> labels = new HashMap<>();
 
-    public static boolean contains(int id) {
+    public boolean contains(int id) {
         return labels.containsKey(id);
     }
 
-    public static Label markOrGet(int id) {
+    public Label markOrGet(int id) {
         if (labels.containsKey(id))
             return labels.get(id);
         return mark(id);
     }
 
-    public static Label mark(int id) {
+    public Label mark(int id) {
         Label label = new Label();
         labels.put(id, label);
         return label;
     }
 
-    public static Label visit(MethodVisitor visitor, int id) {
+    public Label visit(MethodVisitor visitor, int id) {
         Label label = labels.get(id);
         if (label == null) {
             label = mark(id);
@@ -36,7 +36,7 @@ public class LabelObserver {
         return label;
     }
 
-    public static void flush() {
+    public void flush() {
         labels.clear();
     }
 

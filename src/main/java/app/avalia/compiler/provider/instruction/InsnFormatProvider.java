@@ -30,12 +30,12 @@ public class InsnFormatProvider implements AILProvider<AILInstruction> {
 
         int index = 0;
         for (AILInstruction instruction : component.getInstructions()) {
-            int stackSize = StackObserver.getStackSize(); // store old stack size
+            int stackSize = visitor.stack().getStackSize(); // store old stack size
 
             AILCompiler.recursiveInstructionCompile(visitor, Collections.singletonList(instruction));
 
             // detect if stack size changed
-            if (stackSize > StackObserver.getStackSize()) {
+            if (stackSize > visitor.stack().getStackSize()) {
 
                 index++;
             }

@@ -24,7 +24,7 @@ public class InsnIfProvider implements AILProvider<AILInstruction> {
         String val = component.asValue(0).get().getContent().toString();
 
         label = new Label();
-        visitor.current().visitJumpInsn(getCondition(val), label);
+        visitor.current().visitJumpInsn(getCondition(visitor, val), label);
     }
 
     @Override
@@ -32,11 +32,11 @@ public class InsnIfProvider implements AILProvider<AILInstruction> {
         visitor.current().visitLabel(label);
     }
 
-    public static int getCondition(String str) {
+    public static int getCondition(BytecodeVisitor visitor, String str) {
         for (IfType type : IfType.values()) {
             if (!type.str.equals(str))
                 continue;
-            StackObserver.pop(type.pops);
+            visitor.stack().pop(type.pops);
             return type.opcode;
         }
         return -1;

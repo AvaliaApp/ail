@@ -1,5 +1,7 @@
 package app.avalia.compiler.bytecode;
 
+import app.avalia.compiler.bytecode.observer.LabelObserver;
+import app.avalia.compiler.bytecode.observer.StackObserver;
 import app.avalia.compiler.lang.type.AILType;
 import app.avalia.compiler.pool.BasePoolProvider;
 import app.avalia.compiler.pool.info.CommandPoolInfo;
@@ -12,14 +14,25 @@ import static org.objectweb.asm.Opcodes.ACC_PUBLIC;
 public class BytecodeVisitor {
 
     private final ClassWriter CLASS_WRITER = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
-    private MethodVisitor CURRENT_METHOD_VISITOR;
+    private final StackObserver STACK_OBSERVER = new StackObserver();
+    private final LabelObserver LABEL_OBSERVER = new LabelObserver();
+
+    private MethodVisitor currentMethodVisitor;
 
     public ClassWriter get() {
         return CLASS_WRITER;
     }
 
     public MethodVisitor current() {
-        return CURRENT_METHOD_VISITOR;
+        return currentMethodVisitor;
+    }
+
+    public StackObserver stack() {
+        return STACK_OBSERVER;
+    }
+
+    public LabelObserver label() {
+        return LABEL_OBSERVER;
     }
 
     public void visitPushInsn(AILType type, Object value) {
@@ -97,7 +110,7 @@ public class BytecodeVisitor {
                 name, descriptor, null, null);
         mv.visitAnnotation(MinecraftDescriptors.EVENT_HANDLER_ANNOTATION, true)
                 .visitEnd();
-        CURRENT_METHOD_VISITOR = mv;
+        currentMethodVisitor = mv;
     }
 
     public void visitMethod(String name, String descriptor) {
@@ -106,7 +119,7 @@ public class BytecodeVisitor {
                 descriptor,
                 null,
                 null);
-        CURRENT_METHOD_VISITOR = mv;
+        currentMethodVisitor = mv;
     }
 
     public void visitInit() {

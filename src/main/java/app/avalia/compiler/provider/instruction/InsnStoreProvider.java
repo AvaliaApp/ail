@@ -21,7 +21,7 @@ public class InsnStoreProvider implements AILProvider<AILInstruction> {
         Optional<AILTypeContent> content = component.asType(0);
         if (content.isPresent()) {
             AILType type = content.get().getType();
-            AILType[] lastArr = StackObserver.last(1);
+            AILType[] lastArr = visitor.stack().last(1);
             if (lastArr.length == 0)
                 return; // todo error handling
             AILType last = lastArr[0];
@@ -32,16 +32,16 @@ public class InsnStoreProvider implements AILProvider<AILInstruction> {
 
             visitor.current().visitVarInsn(type.toStoreInsn(),
                     component.getId());
-            StackObserver.store(component.getId(), type);
+            visitor.stack().store(component.getId(), type);
             return;
         }
 
-        AILType[] last = StackObserver.last(1);
+        AILType[] last = visitor.stack().last(1);
         if (last.length == 0)
             return; // todo error handling
 
         visitor.current().visitVarInsn(last[0].toStoreInsn(), component.getId());
-        StackObserver.store(component.getId(), last[0]);
+        visitor.stack().store(component.getId(), last[0]);
     }
 
     @Override
