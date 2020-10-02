@@ -11,10 +11,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Simple utility for packaging jar artifact from a single .class byte array
+ */
 public class JarPackager {
 
     private static final String SEP = File.separator;
 
+    /**
+     * Outputs a jar artifact and it's main .class file
+     * @param byteArray Bytecode represented in byte array
+     * @throws IOException
+     */
     public static void pack(byte[] byteArray) throws IOException {
         ZipFile file = new ZipFile("plugin.jar");
 

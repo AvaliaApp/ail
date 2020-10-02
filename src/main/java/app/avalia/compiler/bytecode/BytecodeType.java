@@ -2,6 +2,9 @@ package app.avalia.compiler.bytecode;
 
 import app.avalia.compiler.lang.type.AILType;
 
+/**
+ * Stores bytecode type descriptors
+ */
 public enum BytecodeType {
     BOOL("Z"),
     CHAR("C"),
@@ -15,7 +18,7 @@ public enum BytecodeType {
     TEXT("Ljava/lang/String;"),
     REF("Ljava/lang/Object;");
 
-    private String descriptor;
+    private final String descriptor;
 
     BytecodeType(String descriptor) {
         this.descriptor = descriptor;

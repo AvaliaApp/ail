@@ -2,6 +2,9 @@ package app.avalia.compiler.lang.type;
 
 import org.objectweb.asm.Opcodes;
 
+/**
+ * All of the available variable/value types in AIL compiler
+ */
 public enum AILType {
 
     INT(int.class),
@@ -25,6 +28,11 @@ public enum AILType {
         return clazz;
     }
 
+    /**
+     * Converts a string to proper value based on it's type
+     * @param parsedValue Parsed string
+     * @return Parsed value
+     */
     public Object cast(String parsedValue) {
         switch (this) {
             case INT: return Integer.parseInt(parsedValue);
@@ -42,6 +50,9 @@ public enum AILType {
         return parsedValue;
     }
 
+    /**
+     * @return Proper return instruction based on it's type
+     */
     public int toRetInsn() {
         switch (this) {
             case INT:
@@ -63,6 +74,9 @@ public enum AILType {
         return -1;
     }
 
+    /**
+     * @return Proper load instruction based on it's type
+     */
     public int toLoadInsn() {
         switch (this) {
             case INT:
@@ -84,6 +98,9 @@ public enum AILType {
         return -1;
     }
 
+    /**
+     * @return Proper store instruction based on it's type
+     */
     public int toStoreInsn() {
         switch (this) {
             case INT:

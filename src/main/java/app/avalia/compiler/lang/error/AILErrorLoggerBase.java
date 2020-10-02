@@ -4,6 +4,9 @@ import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
 
+/**
+ * Base error listener for ANTLR errors
+ */
 public class AILErrorLoggerBase extends BaseErrorListener {
     public static final AILErrorLoggerBase INSTANCE = new AILErrorLoggerBase();
 

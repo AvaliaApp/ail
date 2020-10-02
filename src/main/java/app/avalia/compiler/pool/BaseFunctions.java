@@ -7,6 +7,9 @@ import app.avalia.compiler.provider.function.FuncEnableEventProvider;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Stores information about available functions that can be declared and handled
+ */
 public class BaseFunctions {
 
     private static final Map<String, AILProvider<AILFunction>> functions = new HashMap<>();

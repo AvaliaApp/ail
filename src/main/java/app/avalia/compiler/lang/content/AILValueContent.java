@@ -3,6 +3,10 @@ package app.avalia.compiler.lang.content;
 import app.avalia.compiler.lang.AILContent;
 import app.avalia.compiler.lang.type.AILType;
 
+/**
+ * Value type, always contains non-null type even if it is auto-matched
+ * Example: "int 10", "10"
+ */
 public class AILValueContent implements AILContent {
 
     private AILType type;

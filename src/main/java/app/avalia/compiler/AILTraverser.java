@@ -23,6 +23,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
+/**
+ * Main traverser of AIL classes, uses ANTLR parser and lexer implementation
+ * Returns parsed {@link AILClass} pojo object that represents the AIL structure
+ */
 public class AILTraverser {
 
     public static AILClass traverseString(String code) {

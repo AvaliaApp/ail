@@ -7,6 +7,12 @@ import java.util.List;
 
 public class BytecodeDescriptors {
 
+    /**
+     * Parses a bytecode method descriptor
+     * Currently does not support array types (omits them)
+     * @param descriptor Bytecode descriptor
+     * @return {@link BytecodeMethodInfo}
+     */
     public static BytecodeMethodInfo parse(String descriptor) {
         int beginIndex = descriptor.indexOf('(');
         int endIndex = descriptor.lastIndexOf(')');
@@ -42,6 +48,11 @@ public class BytecodeDescriptors {
         return new BytecodeMethodInfo(arguments, byDescriptor(returnType));
     }
 
+    /**
+     * Gets a type based on it's bytecode representation
+     * @param descriptor Type descriptor
+     * @return {@link AILType}
+     */
     private static AILType byDescriptor(String descriptor) {
         BytecodeType type = BytecodeType.byDescriptor(descriptor);
         return BytecodeType.toAILType(type);

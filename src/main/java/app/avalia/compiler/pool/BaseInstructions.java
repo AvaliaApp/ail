@@ -9,6 +9,9 @@ import app.avalia.compiler.provider.instruction.config.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Stores information about the instruction set
+ */
 public class BaseInstructions {
 
     private static final Map<String, AILProvider<AILInstruction>> instructions = new HashMap<>();

@@ -2,6 +2,9 @@ package app.avalia.compiler.pool.info;
 
 import org.objectweb.asm.Opcodes;
 
+/**
+ * Handles information about an invoke specs
+ */
 public class InvokePoolInfo {
 
     private final int id;
@@ -22,6 +25,10 @@ public class InvokePoolInfo {
         return invokeType;
     }
 
+    /**
+     * Converts string-represented invoke type to it's bytecode opcode
+     * @param invokeType String-represented invoke type
+     */
     public void setInvokeType(String invokeType) {
         switch (invokeType) {
             case "static":

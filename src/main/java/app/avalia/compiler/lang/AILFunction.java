@@ -5,6 +5,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Handles information about a single function and it's inner instructions
+ */
 public class AILFunction extends AILComponent {
 
     private final List<AILInstruction> instructions = new ArrayList<>();

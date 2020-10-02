@@ -1,5 +1,8 @@
 package app.avalia.compiler.pool.info;
 
+/**
+ * Handles information about a command and it's function declaration
+ */
 public class CommandPoolInfo {
 
     private String target;

@@ -11,6 +11,9 @@ import org.objectweb.asm.Opcodes;
 
 import static org.objectweb.asm.Opcodes.ACC_PUBLIC;
 
+/**
+ * Bytecode manipulation class
+ */
 public class BytecodeVisitor {
 
     private final ClassWriter CLASS_WRITER = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
@@ -19,22 +22,58 @@ public class BytecodeVisitor {
 
     private MethodVisitor currentMethodVisitor;
 
+    /**
+     * @return {@link ClassWriter}
+     */
     public ClassWriter get() {
         return CLASS_WRITER;
     }
 
+    /**
+     * Gets the current method visitor
+     * @return {@link MethodVisitor}
+     */
     public MethodVisitor current() {
         return currentMethodVisitor;
     }
 
+    /**
+     * Gets the stack observer
+     * @return {@link StackObserver}
+     */
     public StackObserver stack() {
         return STACK_OBSERVER;
     }
 
+    /**
+     * Gets the label observer
+     * @return {@link LabelObserver}
+     */
     public LabelObserver label() {
         return LABEL_OBSERVER;
     }
 
+    /**
+     * Visits a const type push instruction
+     *
+     * Short values are pushed through "sipush" bytecode instruction
+     *
+     * Byte values are pushed through "bipush" bytecode instruction
+     *
+     * Boolean values are pushed as an integer value of 1 or 0
+     *
+     * Char values are pushed as "bipush" bytecode instruction
+     *
+     * Int values are pushed using "iconst_n", "sipush", "bipush" or "ldc" bytecode instructions
+     * depending on the size of the value.
+     *
+     * Long, double, float are pushed through their corresponding "const_n" instructions or "ldc"/"ldc2_w"
+     *
+     * Text and object is pushed through "ldc"
+     *
+     * @param type Type of the const value
+     * @param value Pushed value
+     */
     public void visitPushInsn(AILType type, Object value) {
         switch (type) {
             case SHORT:
@@ -105,23 +144,35 @@ public class BytecodeVisitor {
         }
     }
 
+    /**
+     * Visits a bukkit event listener
+     * @param name Name of the method
+     * @param descriptor Descriptor of the method
+     */
     public void visitEvent(String name, String descriptor) {
-        MethodVisitor mv = CLASS_WRITER.visitMethod(ACC_PUBLIC,
+        currentMethodVisitor = CLASS_WRITER.visitMethod(ACC_PUBLIC,
                 name, descriptor, null, null);
-        mv.visitAnnotation(MinecraftDescriptors.EVENT_HANDLER_ANNOTATION, true)
+        currentMethodVisitor
+                .visitAnnotation(MinecraftDescriptors.EVENT_HANDLER_ANNOTATION, true)
                 .visitEnd();
-        currentMethodVisitor = mv;
     }
 
+    /**
+     * Visits a public method declaration
+     * @param name Name of the method
+     * @param descriptor Descriptor of the method
+     */
     public void visitMethod(String name, String descriptor) {
-        MethodVisitor mv = get().visitMethod(ACC_PUBLIC,
+        currentMethodVisitor = get().visitMethod(ACC_PUBLIC,
                 name,
                 descriptor,
                 null,
                 null);
-        currentMethodVisitor = mv;
     }
 
+    /**
+     * Bukkit initializer, registers events and commands
+     */
     public void visitInit() {
         current().visitMethodInsn(Opcodes.INVOKESTATIC,
                 "org/bukkit/Bukkit",

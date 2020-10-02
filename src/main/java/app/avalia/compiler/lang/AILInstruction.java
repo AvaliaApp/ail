@@ -7,6 +7,9 @@ import app.avalia.compiler.lang.type.AILType;
 
 import java.util.*;
 
+/**
+ * Handles information about a single instruction, it's inner instructions and it's arguments
+ */
 public class AILInstruction extends AILComponent {
 
     private String name;
@@ -59,6 +62,11 @@ public class AILInstruction extends AILComponent {
         return arguments;
     }
 
+    /**
+     * Gets an argument at position as value type
+     * @param position Argument index
+     * @return {@link AILValueContent} if it exists
+     */
     public Optional<AILValueContent> asValue(int position) {
         if (position >= this.getArguments().size())
             return Optional.empty();
@@ -69,6 +77,11 @@ public class AILInstruction extends AILComponent {
         return Optional.of((AILValueContent)argument.getContent());
     }
 
+    /**
+     * Gets an argument at position as type-type
+     * @param position Argument index
+     * @return {@link AILTypeContent} if it exists
+     */
     public Optional<AILTypeContent> asType(int position) {
         if (position >= this.getArguments().size())
             return Optional.empty();
@@ -79,6 +92,11 @@ public class AILInstruction extends AILComponent {
         return Optional.of((AILTypeContent)argument.getContent());
     }
 
+    /**
+     * Gets an argument at position as delegate type
+     * @param position Argument index
+     * @return {@link AILDelegateContent} if it exists
+     */
     public Optional<AILDelegateContent> asDelegate(int position) {
         if (position >= this.getArguments().size())
             return Optional.empty();
