@@ -26,13 +26,17 @@ public class InsnCastProvider implements AILProvider<AILInstruction> {
     }
 
     public static void visitCast(BytecodeVisitor visitor, AILType origin, AILType target) {
-        if (origin == AILType.TEXT || target == AILType.TEXT) {
+        if (origin == AILType.TEXT || target == AILType.TEXT
+                || origin == AILType.REF || target == AILType.REF) {
             ParseInvoker invoker = ParseProcess.get(origin, target);
             if (invoker == null)
                 return;
 
             if (invoker == ParseInvoker.CHAR_AT)
                 visitor.visitPushInsn(AILType.INT, 0);
+
+            if (origin == AILType.REF && target != AILType.TEXT)
+                visitor.current().visitTypeInsn(CHECKCAST, target.getObjectDescriptor());
 
             invoker.invoke(visitor);
             return;
@@ -62,7 +66,26 @@ public class InsnCastProvider implements AILProvider<AILInstruction> {
         SHORT_PARSE(INVOKESTATIC, "java/lang/Short", "parseShort", "(Ljava/lang/String;)S"),
         LONG_PARSE(INVOKESTATIC, "java/lang/Long", "parseLong", "(Ljava/lang/String;)J"),
 
-        CHAR_AT(INVOKEVIRTUAL, "java/lang/String", "charAt", "(I)C");
+        CHAR_AT(INVOKEVIRTUAL, "java/lang/String", "charAt", "(I)C"),
+
+        INT_REF_VALUEOF(INVOKESTATIC, "java/lang/Integer", "valueOf", "(I)Ljava/lang/Integer;"),
+        DOUBLE_REF_VALUEOF(INVOKESTATIC, "java/lang/Double", "valueOf", "(D)Ljava/lang/Double;"),
+        BYTE_REF_VALUEOF(INVOKESTATIC, "java/lang/Byte", "valueOf", "(B)Ljava/lang/Byte;"),
+        FLOAT_REF_VALUEOF(INVOKESTATIC, "java/lang/Float", "valueOf", "(F)Ljava/lang/Float;"),
+        BOOL_REF_VALUEOF(INVOKESTATIC, "java/lang/Boolean", "valueOf", "(Z)Ljava/lang/Boolean;"),
+        SHORT_REF_VALUEOF(INVOKESTATIC, "java/lang/Short", "valueOf", "(S)Ljava/lang/Short;"),
+        CHAR_REF_VALUEOF(INVOKESTATIC, "java/lang/Character", "valueOf", "(C)Ljava/lang/Character;"),
+        LONG_REF_VALUEOF(INVOKESTATIC, "java/lang/Long", "valueOf", "(J)Ljava/lang/Long;"),
+
+        INT_VALUE(INVOKEVIRTUAL, "java/lang/Integer", "intValue", "()I"),
+        DOUBLE_VALUE(INVOKEVIRTUAL, "java/lang/Double", "doubleValue", "()D"),
+        BYTE_VALUE(INVOKEVIRTUAL, "java/lang/Byte", "byteValue", "()B"),
+        FLOAT_VALUE(INVOKEVIRTUAL, "java/lang/Float", "floatValue", "()F"),
+        BOOL_VALUE(INVOKEVIRTUAL, "java/lang/Boolean", "booleanValue", "()Z"),
+        SHORT_VALUE(INVOKEVIRTUAL, "java/lang/Short", "shortValue", "()S"),
+        CHAR_VALUE(INVOKEVIRTUAL, "java/lang/Character", "charValue", "()C"),
+        LONG_VALUE(INVOKEVIRTUAL, "java/lang/Long", "longValue", "()J"),
+        TEXT_VALUE(INVOKEVIRTUAL, "java/lang/Object", "toString", "()Ljava/lang/String;");
 
         public void invoke(BytecodeVisitor visitor) {
             visitor.current().visitMethodInsn(
@@ -111,6 +134,25 @@ public class InsnCastProvider implements AILProvider<AILInstruction> {
         CHAR_TO_TEXT(AILType.CHAR, AILType.TEXT, ParseInvoker.CHAR_VALUEOF),
         LONG_TO_TEXT(AILType.LONG, AILType.TEXT, ParseInvoker.LONG_VALUEOF),
         BOOL_TO_TEXT(AILType.BOOL, AILType.TEXT, ParseInvoker.BOOL_VALUEOF),
+
+        INT_TO_REF(AILType.INT, AILType.REF, ParseInvoker.INT_REF_VALUEOF),
+        DOUBLE_TO_REF(AILType.DOUBLE, AILType.REF, ParseInvoker.DOUBLE_REF_VALUEOF),
+        BYTE_TO_REF(AILType.BYTE, AILType.REF, ParseInvoker.BYTE_REF_VALUEOF),
+        FLOAT_TO_REF(AILType.FLOAT, AILType.REF, ParseInvoker.FLOAT_REF_VALUEOF),
+        SHORT_TO_REF(AILType.SHORT, AILType.REF, ParseInvoker.SHORT_REF_VALUEOF),
+        CHAR_TO_REF(AILType.CHAR, AILType.REF, ParseInvoker.CHAR_REF_VALUEOF),
+        LONG_TO_REF(AILType.LONG, AILType.REF, ParseInvoker.LONG_REF_VALUEOF),
+        BOOL_TO_REF(AILType.BOOL, AILType.REF, ParseInvoker.BOOL_REF_VALUEOF),
+
+        REF_TO_INT(AILType.REF, AILType.INT, ParseInvoker.INT_VALUE),
+        REF_TO_DOUBLE(AILType.REF, AILType.DOUBLE, ParseInvoker.DOUBLE_VALUE),
+        REF_TO_BYTE(AILType.REF, AILType.BYTE, ParseInvoker.BYTE_VALUE),
+        REF_TO_FLOAT(AILType.REF, AILType.FLOAT, ParseInvoker.FLOAT_VALUE),
+        REF_TO_SHORT(AILType.REF, AILType.SHORT, ParseInvoker.SHORT_VALUE),
+        REF_TO_CHAR(AILType.REF, AILType.CHAR, ParseInvoker.CHAR_VALUE),
+        REF_TO_LONG(AILType.REF, AILType.LONG, ParseInvoker.LONG_VALUE),
+        REF_TO_BOOL(AILType.REF, AILType.BOOL, ParseInvoker.BOOL_VALUE),
+        REF_TO_TEXT(AILType.REF, AILType.TEXT, ParseInvoker.TEXT_VALUE),
 
         TEXT_TO_INT(AILType.TEXT, AILType.INT, ParseInvoker.INT_PARSE),
         TEXT_TO_DOUBLE(AILType.TEXT, AILType.DOUBLE, ParseInvoker.DOUBLE_PARSE),

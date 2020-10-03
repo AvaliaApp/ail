@@ -75,6 +75,11 @@ public class BytecodeVisitor {
      * @param value Pushed value
      */
     public void visitPushInsn(AILType type, Object value) {
+        if (value == null) {
+            current().visitInsn(Opcodes.ACONST_NULL);
+            return;
+        }
+
         switch (type) {
             case SHORT:
                 short vals = (short)value;

@@ -44,10 +44,31 @@ public enum AILType {
             case LONG: return Long.parseLong(parsedValue);
             case CHAR: return parsedValue.charAt(0);
             case TEXT:
-            case REF:
+            case REF: {
+                if (parsedValue.equals("null"))
+                    return null;
                 return parsedValue;
+            }
         }
         return parsedValue;
+    }
+
+    /**
+     * Get object descriptor from primitive type
+     */
+    public String getObjectDescriptor() {
+        switch (this) {
+            case INT: return "Ljava/lang/Integer;";
+            case FLOAT: return "Ljava/lang/Float;";
+            case DOUBLE: return "Ljava/lang/Double;";
+            case SHORT: return "Ljava/lang/Short;";
+            case BOOL: return "Ljava/lang/Boolean;";
+            case BYTE: return "Ljava/lang/Byte;";
+            case LONG: return "Ljava/lang/Long;";
+            case CHAR: return "Ljava/lang/Character;";
+            case TEXT: return "Ljava/lang/String;";
+        }
+        return "Ljava/lang/Object;";
     }
 
     /**
